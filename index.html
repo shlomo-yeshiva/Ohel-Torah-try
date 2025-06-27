@@ -1,4 +1,4 @@
-י עושה שהאתר יופיע בבחי<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8" />
@@ -9,6 +9,41 @@
         @font-face {
             font-family: 'EFT_Atara';
             src: url('EFT_Atara.woff') format('woff');
+        }
+
+        /* הגנה מפני העתקה - אבל לא על שדה הסיסמה */
+        *:not(#password-input) {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* אפשר בחירה בשדה הסיסמה */
+        #password-input {
+            -webkit-user-select: text !important;
+            -moz-user-select: text !important;
+            -ms-user-select: text !important;
+            user-select: text !important;
+        }
+
+        /* הגנה על תמונות */
+        img {
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -o-user-select: none;
+            user-select: none;
+            pointer-events: none;
+            -webkit-user-drag: none;
+            -khtml-user-drag: none;
+            -moz-user-drag: none;
+            -o-user-drag: none;
+            user-drag: none;
+            -ms-user-select: none;
+            -webkit-touch-callout: none;
         }
 
         html, body {
@@ -22,7 +57,6 @@
             touch-action: pan-y;
             scroll-behavior: smooth;
         }
-
 
         .navigation {
             position: fixed;
@@ -367,6 +401,7 @@
             background-color: rgba(128, 0, 0, 0.4); /* מסכה אדומה עם אטימות 20% */
             z-index: 1;
         }
+
         .cream-box-2 {
             position: relative;
             top: 0;
@@ -403,18 +438,18 @@
         }
 
         .leader-card {
+            width: 97.5%;
+            max-width: none;
+            box-sizing: border-box;
             display: flex;
             align-items: center;
             gap: 25px;
             background-color: #FFF8DC;
             border-radius: 15px;
             padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6), 0 5px 10px rgba(0, 0, 0, 0.4);
+            margin: 0 auto 20px auto;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.8), 0 8px 15px rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(10px);
-            width: 100%;
-            max-width: 1070px;
-            margin: 0 auto 20px auto; /* הוסף את השורה הזו במקום margin-bottom */
         }
 
         .project-card {
@@ -729,7 +764,7 @@
 </head>
 
 <body>
-        <!-- הוסף כאן את מסך הסיסמה -->
+    <!-- הוסף כאן את מסך הסיסמה -->
     <div id="password-screen" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%;
 background: rgba(0, 0, 0, 0.5); display: flex;
 justify-content: center; align-items: center; z-index: 10000;">
@@ -748,314 +783,477 @@ border: 17px solid #800000; text-align: center; box-shadow: 0 20px 40px rgba(0, 
         </div>
     </div>
 
-        <nav class="navigation">
-            <div class="nav-container">
-                <button class="nav-btn active" onclick="goToHomePage()">בית</button>
-                <button class="nav-btn" onclick="showPage('about')">אודות</button>
-                <button class="nav-btn" onclick="showPage('events')">אירועים</button>
-                <button class="nav-btn" onclick="showPage('shiurim')">מפעלים</button>
-                <button class="nav-btn" onclick="showPage('contact')">לתרומות</button>
-            </div>
-        </nav>
-
-        <div id="home-page" class="page active-page">
-            <div class="hero-section">
-                <h1 class="hero-title" id="mainTitle">אהל תורה</h1>
-                <img src="https://i.postimg.cc/4xX4LcNM/optimized-optimized-optimized.png" alt="תמונת רקע" class="hero-image" />
-            </div>
+    <nav class="navigation">
+        <div class="nav-container">
+            <button class="nav-btn active" onclick="goToHomePage()">בית</button>
+            <button class="nav-btn" onclick="showPage('about')">אודות</button>
+            <button class="nav-btn" onclick="showPage('events')">אירועים</button>
+            <button class="nav-btn" onclick="showPage('shiurim')">מפעלים</button>
+            <button class="nav-btn" onclick="showPage('contact')">לתרומות</button>
         </div>
+    </nav>
 
-        <div id="about-page" class="page">
-            <div class="page-content">
-                <h2>אודות אהל תורה</h2>
-                <p>בהיכל הישיבה - שוקדים על תלמודם 400 לומדים העמלים בתורה תחת הנהגתם הרוחנית של מרנן ורבנן גדולי התורה שליט"א, במטרה להצמיח את הדור הבא של בני התורה בארץ ובעולם כולו.</p>
+    <div id="home-page" class="page active-page">
+        <div class="hero-section">
+            <h1 class="hero-title" id="mainTitle">אהל תורה</h1>
+            <img src="https://i.postimg.cc/4xX4LcNM/optimized-optimized-optimized.png" alt="תמונת רקע" class="hero-image" />
+        </div>
+    </div>
 
-                <div class="info-grid">
-                    <div class="info-card">
-                        <p style="font-size: 88px; line-height: 1.1; font-weight: bold; font-family: 'Guttman Rashi', serif;">"המקום שמצמיח<br>דור יראים..."</p>
-                    </div>
-                    <div class="info-card">
-                        <p style="font-size: 88px; line-height: 1.1; font-weight: bold; font-family: 'Guttman Rashi', serif;">"שהיראת שמיים<br>והרמה הלימודית<br>נפגשים..."</p>
-                    </div>
+    <div id="about-page" class="page">
+        <div class="page-content">
+            <h2>אודות אהל תורה</h2>
+            <p>בהיכל הישיבה - שוקדים על תלמודם 400 לומדים העמלים בתורה תחת הנהגתם הרוחנית של מרנן ורבנן גדולי התורה שליט"א, במטרה להצמיח את הדור הבא של בני התורה בארץ ובעולם כולו.</p>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <p style="font-size: 88px; line-height: 1.1; font-weight: bold; font-family: 'Guttman Rashi', serif;">"המקום שמצמיח<br>דור יראים..."</p>
                 </div>
-
-                <!-- הריבוע הזה יהיה בחוץ לבד -->
-                <div class="content-box">
-                    <p class="title">מספרי הבחורים</p>
-                    <p style="color: #722F37;">בני הישיבה נמנים על סך 400 בחורים השוקדים על תלמודם בהתמדה נוראה.</p>
-                    <p style="color: #722F37;"> צוות הישיבה דואג למזג את השילוב בין מספרם הרב של בני הישיבה לבין הבנייה האישית וצמיחתו בתורה וביראת שמיים טהורה של כל בחור ובחור בפני עצמו.</p>
-                    <p style="color: #722F37;"> אשר על כן צוות הישיבה דואג לחלוקה של השיעורים כדלהלן:</p>
-                    <p style="color: #722F37;">שיעור א' - 140 בחורים</p>
-                    <p style="color: #722F37;">שיעור ב' - 115 בחורים</p>
-                    <p style="color: #722F37;">שיעור ג' - 80 בחורים</p>
-                    <p style="color: #722F37;">קיבוץ - 65 בחורים</p>
-                    <p style="color: #722F37;">מכיון שצוות הישיבה דואג שכל בחור יקבל יחס אישי על אף המספר הרב של בני השיעור.</p>
-                    <p style="color: #722F37;">לפיכך השיעורים שיש בתוכם מספר רב של לומדים מחולקים לשני מגידי שיעורים שונים.</p>
-                </div>
-
-                <!-- הריבוע החום יתחיל מכאן -->
-                <div class="cream-box-2" style="position: relative; top: 0; margin-top: 20px;">
-                    <div class="leadership-section">
-                        <div class="content-box">
-                            <p class="title">פרטים על צוות הישיבה</p>
-                            <p style="color: #722F37;">בישיבתנו ישנם כמה סוגי מגידי שיעורים, כל אחד עם רקע וסגנון לימוד שונה. חלקם גדלו בישיבות שונות, מה שהביא עימם דרך לימוד שונה זו מזו. המגוון הזה משקף את רצון הישיבה להכשיר את הבחורים להיות 'כלי קיבול' רחב לכל סגננות הלימוד, ובכך לפתח את האישיות והעמקה הלימודית של כל אחד ואחד, המטרה בזה היא שבני הישיבה יצאו בנויים מישיבתנו מבחינה לימודית מכל הסגנונות.</p>
-                            <p style="color: #722F37;">מכיון שצוות הישיבה דואג שכל בחור יקבל יחס אישי על אף המספר הרב של בני השיעור, לפיכך השיעורים שיש בתוכם מספר רב של לומדים מחולקים לשני מגידי שיעורים שונים.</p>
-                            <p style="color: #722F37;">ובפרט שיעור א' שחשוב מאוד לצוות הישיבה שיקבלו את היחס החם ואת הבנייה הנצרכת לכל בחור ובחור.</p>
-                        </div>
-
-
-                        <div class="leader-card">
-                            <div class="leader-text">
-                                <h3>נשיא הישיבה שליט"א</h3>
-                                <h4>הרה"ג ר' שלמה קצין שליט"א</h4>
-                                <p class="short-info">בוגר ישיבת נר ישראל.</p>
-                                <p class="short-info">יו"ר המפעל האדיר "מדרש ספרדי".</p>
-                            </div>
-                            <div class="leader-image">
-                                <img src="https://i.postimg.cc/RZRPBrJp/optimized-optimized.jpg" alt="הרב שלמה קציין שליט" א" />
-                            </div>
-                        </div>
-
-                        <div class="leader-card">
-                            <div class="leader-text">
-                                <h3>ראש הישיבה שליט"א</h3>
-                                <h4>הרה"ג ר' שמעון מעולם שליט"א</h4>
-                                <p class="short-info">בוגר ישיבת רינת התורה</p>
-                                <p class="short-info">מכהן אף כר"מ לבני שיעור ג'</p>
-                            </div>
-                            <div class="leader-image">
-                                <img src="https://i.postimg.cc/50Zg3bDy/optimized-optimized.jpg" alt="הרב שמעון מעולם שליט" א" />
-                            </div>
-                        </div>
-
-                        <div class="leader-card">
-                            <div class="leader-text">
-                                <h3>משגיח הרוחני בישיבה</h3>
-                                <h4>הרה"ג ר' יעקב כהן שליט"א</h4>
-                                <p class="short-info">חתנא דבי נשיאה לחכם שלום הכהן זצוק"ל.</p>
-                                <p class="short-info">בוגר ישיבת קול יעקב</p>
-                                <p>ידוע כאיש מוסר וחינוך, המשלב רגישות מופלאה עם דעת אמונה ומחשבה. שיחותיו ווועדיו מאירים עיניים ומחוללים שינוי פנימי בלב הבחורים, בגדלותו החינוכית מדריך חתנים מבני הישיבה, ונותן בידם כלים לבניין בית נאמן בישראל מתוך יראת שמיים, אחריות ועומק השקפה.</p>
-                            </div>
-                            <div class="leader-image">
-                                <img src="https://i.postimg.cc/NFq8Xbrr/optimized-optimized.jpg" alt="הרב יעקב כהן שליט״א" />
-                            </div>
-                        </div>
-
-                        <div class="leader-card">
-                            <div class="leader-text">
-                                <h3>ראש קיבוץ</h3>
-                                <h4>הרה"ג ר' דוד שריקי שליט"א</h4>
-                                <p class="short-info">בוגר ישיבת עטרת ישראל</p>
-                                <p>ידוע בעמקות עיונו ובבהירות סגנונו. שיעוריו מבררים את הסוגיות על מכונן, מתוך שקדנות והתמדה, ומתוך נאמנות לשיטת הראשונים והאחרונים. דרכו בלימוד מחנכת את תלמידיו לעמל התורה, לדיוק בלשון הראשונים, ולבניית יסודות איתנים בהבנת הסוגיה. גישתו משלבת חריפות דעת עם סבלנות והנחיה, עד שהתלמידים זוכים לקנות קניין בלימוד ולהעלות חידושים מדעתם.</p>
-                            </div>
-                            <div class="leader-image">
-                                <img src="https://i.postimg.cc/yYKXYQHM/optimized-optimized.jpg" alt="הרב דוד שריקי שליט״א" />
-                            </div>
-                        </div>
-
-                        <div class="leader-card">
-                            <div class="leader-text">
-                                <h3>ראש בקיאות</h3>
-                                <h4>הרה"ג ר' שאול יצחקי שליט"א</h4>
-                                <p class="short-info">בוגר ישיבת קול יעקב</p>
-                                <p>העומד בראש מערך הבקיאות בישיבה, עוסק במסירות נדירה בהנחלת קניין אמיתי במסכת הנלמדת. מתוך גישה של בהירות בסוגיות, הוא מדריך את תלמידיו להשיג שליטה רחבה ורצף הבנה בכל סוגיה ופרק. לצד זאת, מרבה הרב לשוחח עם הבחורים באופן אישי, מכוון, מעודד, ופותח בפניהם שער לעמל התורה מתוך שמחה וחיבור פנימי.</p>
-                            </div>
-                            <div class="leader-image">
-                                <img src="https://i.postimg.cc/Gm7kKbyR/optimized-optimized.jpg" alt="הרב שאול יצחקי שליט״א" />
-                            </div>
-                        </div>
-
-                        <div class="leader-card">
-                            <div class="leader-text">
-                                <h3>ר"מ לבני שיעור ב'</h3>
-                                <h4>הרה"ג ר' בנימין כהן שליט"א</h4>
-                                <p class="short-info">בוגר ישיבת בית שמעיה.</p>
-                                <p>מעמיק חקר בדרכה של תורה, נודע בכשרונו לחדד ולהאיר את יסוד מחלוקות הראשונים, תוך עיון דק ועקיב המתבונן לא רק בפשט אלא גם ביסוד שיטתי העומד מאחורי דבריהם. שיעוריו משמשים קרקע פוריה לליבון הסוגיה מתוך עמל, יגיעה והשוואת מקורות. דמותו הרוחנית בישיבה מקרינה יראת שמיים, ענווה אמיתית, כאשר הוא מדריך את בני הישיבה לשיטה של בירור הסוגיות, דיוק והבנה עמוקה.</p>
-                            </div>
-                            <div class="leader-image">
-                                <img src="https://i.postimg.cc/TwmgTmH2/optimized-optimized.jpg" alt="הרב בנימין כהן שליט״א" />
-                            </div>
-                        </div>
-
-                        <div class="leader-card">
-                            <div class="leader-text">
-                                <h3>ר"מ לבני שיעור א'</h3>
-                                <h4>הרה"ג ר' מנחם כהן שליט"א</h4>
-                                <p class="short-info">בוגר ישיבת חברון</p>
-                                <p>מפורסם ביכולתו לדייק בלשנות הראשונים, ולבנות תלי תלים של סברות מתוך דקדוק. שיטתו העיונית נובעת מהבנה שיסודם של מחלוקות רבות נעוץ בניסוחם המדויק, ומתוך העדר או שינוי מילה – עולה בירור עמוק וחשיפת שורש המחלוקת. גישתו מחנכת לגדלות האדם בלימוד התורה.</p>
-                            </div>
-                            <div class="leader-image">
-                                <img src="https://i.postimg.cc/PJjZJxBW/optimized-optimized.jpg" alt="הרב מנחם כהן שליט״א" />
-                            </div>
-                        </div>
-
-                        <div class="leader-card">
-                            <div class="leader-text">
-                                <h3>ר"מ לבני שיעור א'</h3>
-                                <h4>הרה"ג ר' אריאל חיון שליט"א</h4>
-                                <p class="short-info">נכד לחכם שלום הכהן זצוק"ל.</p>
-                                <p class="short-info">בוגר ישיבת אמרי משה</p>
-                                <p>ונודע בשיעוריו שנמסרים בעמקות ובבהירות, מתוך עמל ויגיעה בלימוד. במסירות למלאכת הקודש, ותביעתו המתמדת מהתלמידים לשקוד על תלמודם מתוך אחריות וחתירה לגדולות. כאשר כל תלמיד זוכה לדחיפה מתמדת להתקדמות.</p>
-                            </div>
-                            <div class="leader-image">
-                                <img src="https://i.postimg.cc/QdYKGmzw/optimized-optimized.jpg" alt="הרב אריאל חיון שליט״א" />
-                            </div>
-                        </div>
-
-                    </div>
+                <div class="info-card">
+                    <p style="font-size: 88px; line-height: 1.1; font-weight: bold; font-family: 'Guttman Rashi', serif;">"שהיראת שמיים<br>והרמה הלימודית<br>נפגשים..."</p>
                 </div>
             </div>
-        </div>
 
-        <div id="shiurim-page" class="page">
-            <div class="page-content">
-                <div class="title-box" style="margin-top: 25px;">
-                    <h2>מפעלי קודש המתקימים בין כותלי </h2>
-                    <h2>בית המדרש</h2>
-                </div>
+            <!-- הריבוע הזה יהיה בחוץ לבד -->
+            <div class="content-box">
+                <p class="title">מספרם של בני הישיבה</p>
+                <p style="color: #722F37;">בני הישיבה נמנים על סך 400 בחורים השוקדים על תלמודם בהתמדה נוראה.</p>
+                <p style="color: #722F37;"> צוות הישיבה דואג למזג את השילוב בין מספרם הרב של בני הישיבה לבין הבנייה האישית וצמיחתו בתורה וביראת שמיים טהורה של כל בחור ובחור בפני עצמו.</p>
+                <p style="color: #722F37;"> אשר על כן צוות הישיבה דואג לחלוקה של השיעורים כדלהלן:</p>
+                <p style="color: #722F37;">שיעור א' - 140 בחורים</p>
+                <p style="color: #722F37;">שיעור ב' - 115 בחורים</p>
+                <p style="color: #722F37;">שיעור ג' - 80 בחורים</p>
+                <p style="color: #722F37;">קיבוץ - 65 בחורים</p>
+                <p style="color: #722F37;">מכיון שצוות הישיבה דואג שכל בחור יקבל יחס אישי על אף המספר הרב של בני השיעור.</p>
+                <p style="color: #722F37;">לפיכך השיעורים שיש בתוכם מספר רב של לומדים מחולקים לשני מגידי שיעורים שונים.</p>
+            </div>
 
-                <div class="project-card">
-                    <div class="project-text">
-                        <h3>ותלמוד בידו</h3>
-                        <div style="background-image: url('https://i.postimg.cc/tRWGPgtM/optimized.png'); background-size: 100% 100%; background-position: center 15%; background-repeat: no-repeat; position: relative; padding: 5px; border-radius: 15px; overflow: hidden; mask: radial-gradient(ellipse at center, black 40%, rgba(0,0,0,0.9) 60%, rgba(0,0,0,0.7) 70%, rgba(0,0,0,0.5) 80%, rgba(0,0,0,0.3) 90%, transparent 100%); -webkit-mask: radial-gradient(ellipse at center, black 40%, rgba(0,0,0,0.9) 60%, rgba(0,0,0,0.7) 70%, rgba(0,0,0,0.5) 80%, rgba(0,0,0,0.3) 90%, transparent 100%);">
-                            <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255, 248, 220, 0.75);"></div>
-                            <div style="position: relative; z-index: 2;">
-                                <h4>מפעל לשינון וחזרה על החומר הנלמד בין כותלי הישיבה</h4>
-                                <div style="padding: 10px; margin: 8px 0;">
-                                    <p style="color: #2C1810; padding: 8px; text-shadow: none; font-size: 30px; line-height: 1.4;">
-                                        הבחורים זוכים לשליטה מוחלטת בחומר הנלמד תוך פיתוח ביטחון זכרון ויכולת ניתוח מעמיקה. במבחן זה שמתקיים בסוף זמן בני הישיבה זוכים לקנות ידע עצום במסכת הנלמדת ע"י החזרה למבחן זה.
-                                    </p>
-                                </div>
-                            </div>
+            <!-- הריבוע החום יתחיל מכאן -->
+            <div class="cream-box-2" style="position: relative; top: 0; margin-top: 20px;">
+                <div class="leadership-section">
+                    <div class="content-box">
+                        <p class="title">פרטים על צוות הישיבה</p>
+                        <p style="color: #722F37;">בישיבתנו ישנם כמה סוגי מגידי שיעורים, כל אחד עם רקע וסגנון לימוד שונה. חלקם גדלו בישיבות שונות, מה שהביא עימם דרך לימוד שונה זו מזו. המגוון הזה משקף את רצון הישיבה להכשיר את הבחורים להיות 'כלי קיבול' רחב לכל סגננות הלימוד, ובכך לפתח את האישיות והעמקה הלימודית של כל אחד ואחד, המטרה בזה היא שבני הישיבה יצאו בנויים מישיבתנו מבחינה לימודית מכל הסגנונות.</p>
+                        <p style="color: #722F37;">מכיון שצוות הישיבה דואג שכל בחור יקבל יחס אישי על אף המספר הרב של בני השיעור, לפיכך השיעורים שיש בתוכם מספר רב של לומדים מחולקים לשני מגידי שיעורים שונים.</p>
+                        <p style="color: #722F37;">ובפרט שיעור א' שחשוב מאוד לצוות הישיבה שיקבלו את היחס החם ואת הבנייה הנצרכת לכל בחור ובחור.</p>
+                    </div>
+
+
+                    <div class="leader-card" style="position: relative; top: 0; margin-top: 20px;">
+                        <div class="leader-text">
+                            <h3>נשיא הישיבה שליט"א</h3>
+                            <h4>הרה"ג ר' שלמה קצין שליט"א</h4>
+                            <p class="short-info">בוגר ישיבת נר ישראל.</p>
+                            <p class="short-info">יו"ר המפעל האדיר "מדרש ספרדי".</p>
+                        </div>
+                        <div class="leader-image">
+                            <img src="https://i.postimg.cc/RZRPBrJp/optimized-optimized.jpg" alt="הרב שלמה קציין שליט" א" />
                         </div>
                     </div>
 
-                    <div class="project-image">
-                        <img src="https://i.postimg.cc/qR9tF7zF/img-0790-optimized.jpg" alt="ותלמוד בידו" />
+                    <div class="leader-card">
+                        <div class="leader-text">
+                            <h3>ראש הישיבה שליט"א</h3>
+                            <h4>הרה"ג ר' שמעון מעולם שליט"א</h4>
+                            <p class="short-info">בוגר ישיבת רינת התורה</p>
+                            <p class="short-info">מכהן אף כר"מ לבני שיעור ג'</p>
+                        </div>
+                        <div class="leader-image">
+                            <img src="https://i.postimg.cc/50Zg3bDy/optimized-optimized.jpg" alt="הרב שמעון מעולם שליט" א" />
+                        </div>
                     </div>
-                </div>
 
-                <div class="leader-card">
-                    <div class="leader-text">
-                        <h3>לחידודי</h3>
-                        <h4>מפעל לשינון והבנת דבר מתוך דבר</h4>
-                        <p> מבחנים ייחודיים המעודדים חשיבה מעמיקה, פיתוח תובנות, והסקת מסקנות. כל מבחן שלנו הוא מסע של הבנה לא רק לדעת את התשובה, אלא להבין את הדרך אליה.</p>
+                    <div class="leader-card">
+                        <div class="leader-text">
+                            <h3>משגיח הרוחני בישיבה</h3>
+                            <h4>הרה"ג ר' יעקב כהן שליט"א</h4>
+                            <p class="short-info">חתנא דבי נשיאה לחכם שלום הכהן זצוק"ל.</p>
+                            <p class="short-info">בוגר ישיבת קול יעקב</p>
+                            <p>ידוע כאיש מוסר וחינוך, המשלב רגישות מופלאה עם דעת אמונה ומחשבה. שיחותיו ווועדיו מאירים עיניים ומחוללים שינוי פנימי בלב הבחורים, בגדלותו החינוכית מדריך חתנים מבני הישיבה, ונותן בידם כלים לבניין בית נאמן בישראל מתוך יראת שמיים, אחריות ועומק השקפה.</p>
+                        </div>
+                        <div class="leader-image">
+                            <img src="https://i.postimg.cc/NFq8Xbrr/optimized-optimized.jpg" alt="הרב יעקב כהן שליט״א" />
+                        </div>
                     </div>
-                    <div class="leader-image">
-                        <img src="https://i.postimg.cc/V60CZrBx/optimized.png" style="object-position: top center;" />
+
+                    <div class="leader-card">
+                        <div class="leader-text">
+                            <h3>ראש קיבוץ</h3>
+                            <h4>הרה"ג ר' דוד שריקי שליט"א</h4>
+                            <p class="short-info">בוגר ישיבת עטרת ישראל</p>
+                            <p>ידוע בעמקות עיונו ובבהירות סגנונו. שיעוריו מבררים את הסוגיות על מכונן, מתוך שקדנות והתמדה, ומתוך נאמנות לשיטת הראשונים והאחרונים. דרכו בלימוד מחנכת את תלמידיו לעמל התורה, לדיוק בלשון הראשונים, ולבניית יסודות איתנים בהבנת הסוגיה. גישתו משלבת חריפות דעת עם סבלנות והנחיה, עד שהתלמידים זוכים לקנות קניין בלימוד ולהעלות חידושים מדעתם.</p>
+                        </div>
+                        <div class="leader-image">
+                            <img src="https://i.postimg.cc/yYKXYQHM/optimized-optimized.jpg" alt="הרב דוד שריקי שליט״א" />
+                        </div>
                     </div>
-                </div>
-                <div class="leader-card">
-                    <div class="leader-text">
-                        <h3>חפץ חיים</h3>
-                        <h4>מפעל להלכות לשון הרע בספר </h4>
-                        <h4>"חפץ חיים"</h4>
-                        <p>
-                            מפעל "חפץ חיים" פועל בישיבתנו כמסגרת מרוממת של חיזוק הדיבור ויראת שמיים, דווקא בשעות שבין הסדרים,
-                            בחורי הישיבה מתאספים בחברותות קבועות ללימוד הלכות שמירת הלשון מתוך הספר חפץ חיים,
-                            מעת לעת מתכבדת הישיבה באירוח רבנים חשובים, המעבירים שיעורים מוסריים ועיוניים בנושא, והורדת הדברים הלכה למעשה.
-                        </p>
+
+                    <div class="leader-card">
+                        <div class="leader-text">
+                            <h3>ראש בקיאות</h3>
+                            <h4>הרה"ג ר' שאול יצחקי שליט"א</h4>
+                            <p class="short-info">בוגר ישיבת קול יעקב</p>
+                            <p>העומד בראש מערך הבקיאות בישיבה, עוסק במסירות נדירה בהנחלת קניין אמיתי במסכת הנלמדת. מתוך גישה של בהירות בסוגיות, הוא מדריך את תלמידיו להשיג שליטה רחבה ורצף הבנה בכל סוגיה ופרק. לצד זאת, מרבה הרב לשוחח עם הבחורים באופן אישי, מכוון, מעודד, ופותח בפניהם שער לעמל התורה מתוך שמחה וחיבור פנימי.</p>
+                        </div>
+                        <div class="leader-image">
+                            <img src="https://i.postimg.cc/Gm7kKbyR/optimized-optimized.jpg" alt="הרב שאול יצחקי שליט״א" />
+                        </div>
                     </div>
-                    <div class="leader-image">
-                        <img src="https://i.postimg.cc/Z51HbSsz/optimized.png" alt="חפץ חיים" style="object-position: top center;" />
+
+                    <div class="leader-card">
+                        <div class="leader-text">
+                            <h3>ר"מ לבני שיעור ב'</h3>
+                            <h4>הרה"ג ר' בנימין כהן שליט"א</h4>
+                            <p class="short-info">בוגר ישיבת בית שמעיה.</p>
+                            <p>מעמיק חקר בדרכה של תורה, נודע בכשרונו לחדד ולהאיר את יסוד מחלוקות הראשונים, תוך עיון דק ועקיב המתבונן לא רק בפשט אלא גם ביסוד שיטתי העומד מאחורי דבריהם. שיעוריו משמשים קרקע פוריה לליבון הסוגיה מתוך עמל, יגיעה והשוואת מקורות. דמותו הרוחנית בישיבה מקרינה יראת שמיים, ענווה אמיתית, כאשר הוא מדריך את בני הישיבה לשיטה של בירור הסוגיות, דיוק והבנה עמוקה.</p>
+                        </div>
+                        <div class="leader-image">
+                            <img src="https://i.postimg.cc/TwmgTmH2/optimized-optimized.jpg" alt="הרב בנימין כהן שליט״א" />
+                        </div>
                     </div>
-                </div>
-                <div class="leader-card">
-                    <div class="leader-text">
-                        <h3>סדר מוצאי שביעי</h3>
-                        <h4>מפעל לחיזוק הלימוד במצאי שבת </h4>
-                        <p>
-                             מדי מוצ"ש מתקיים סדר לימוד תוסס ומעמיק, מתוך רצינות, עיון וברוב עם ממש כמו בבית המדרש של אמצע השבוע. לאחר הלימוד, מוגשת סעודת מלכים, מושקעת ומוקפדת, כראוי לכבודה של תורה.
-                        </p>
+
+                    <div class="leader-card">
+                        <div class="leader-text">
+                            <h3>ר"מ לבני שיעור א'</h3>
+                            <h4>הרה"ג ר' מנחם כהן שליט"א</h4>
+                            <p class="short-info">בוגר ישיבת חברון</p>
+                            <p>מפורסם ביכולתו לדייק בלשנות הראשונים, ולבנות תלי תלים של סברות מתוך דקדוק. שיטתו העיונית נובעת מהבנה שיסודם של מחלוקות רבות נעוץ בניסוחם המדויק, ומתוך העדר או שינוי מילה – עולה בירור עמוק וחשיפת שורש המחלוקת. גישתו מחנכת לגדלות האדם בלימוד התורה.</p>
+                        </div>
+                        <div class="leader-image">
+                            <img src="https://i.postimg.cc/PJjZJxBW/optimized-optimized.jpg" alt="הרב מנחם כהן שליט״א" />
+                        </div>
                     </div>
-                    <div class="leader-image">
-                        <img src="https://i.postimg.cc/FzWK0Q5Q/img-9444-optimized.jpg" alt="סדר-מוצאי-שבת" style="object-position: top center;" />
+
+                    <div class="leader-card">
+                        <div class="leader-text">
+                            <h3>ר"מ לבני שיעור א'</h3>
+                            <h4>הרה"ג ר' אריאל חיון שליט"א</h4>
+                            <p class="short-info">בוגר ישיבת אמרי משה</p>
+                            <p class="short-info">נכד לחכם שלום הכהן זצוק"ל.</p>
+                            <p>ונודע בשיעוריו שנמסרים בעמקות ובבהירות, מתוך עמל ויגיעה בלימוד. במסירות למלאכת הקודש, ותביעתו המתמדת מהתלמידים לשקוד על תלמודם מתוך אחריות וחתירה לגדולות. כאשר כל תלמיד זוכה לדחיפה מתמדת להתקדמות.</p>
+                        </div>
+                        <div class="leader-image">
+                            <img src="https://i.postimg.cc/QdYKGmzw/optimized-optimized.jpg" alt="הרב אריאל חיון שליט״א" />
+                        </div>
                     </div>
+
                 </div>
             </div>
         </div>
+    </div>
 
-        <div id="events-page" class="page events-page">
-            <div class="page-content">
-                <div class="title-box" style="margin-top: 25px;">
-                    <h2>מראות הוד מביקורי מרנן ורבנן גדולי ומאורי הדור שליט"א</h2>
-                </div>
-                <div class="leader-card">
-                    <div class="leader-text">
-                        <h3>הגה"ג ר' דוד כהן שליט"א</h3>
-                        <h4>ראש ישיבת חברון</h4>
-                        <p>בערב ימי הרחמים והסליחות, כאשר הלבבות פתוחים לשינוי והתעלות, זכינו למעמד נשגב עם בואו של הגאון הגדול ר' דוד כהן שליט"א. דבריו חדרו ללבבות בעומק נדיר, והקרינו קדושה ורצינות שהעלו את רוח הבחורים לגבהים חדשים. ההתחזקות שניטעה הופכים את הביקור לזיכרון בל יימחה, אשר ישמש מצפן רוחני לבני הישבה לאורך כל השנה, ובמיוחד בימים הנשגבים שעמדו בפתח.</p>
-                    </div>
-                    <div class="leader-image">
-                        <div style="display: flex; flex-direction: column; gap: 10px; height: 100%; justify-content: center; align-items: center;">
-                            <img src="https://i.postimg.cc/DzWS6FmM/optimized.jpg" alt="הרב דוד כהן שליט״א" style="width: 350px; height: 175px; object-fit: cover; border-radius: 5px; border: 5px solid white; box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);" />
-                            <img src="https://i.postimg.cc/rFmgT0H0/p1190138-optimized.jpg" alt="ביקור הרב דוד כהן בישיבה" style="width: 350px; height: 175px; object-fit: cover; border-radius: 5px; border: 5px solid white; box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);" />
+    <div id="shiurim-page" class="page">
+        <div class="page-content">
+            <div class="title-box" style="margin-top: 25px;">
+                <h2>מפעלי קודש המתקימים בין כותלי </h2>
+                <h2>בית המדרש</h2>
+            </div>
+
+            <div class="project-card leader-card">
+                <div class="project-text leader-text">
+                    <h3>ותלמוד בידו</h3>
+                    <div style="background-image: url('https://i.postimg.cc/tRWGPgtM/optimized.png'); background-size: 100% 100%; background-position: center 15%; background-repeat: no-repeat; position: relative; padding: 5px; border-radius: 15px; overflow: hidden; mask: radial-gradient(ellipse at center, black 40%, rgba(0,0,0,0.9) 60%, rgba(0,0,0,0.7) 70%, rgba(0,0,0,0.5) 80%, rgba(0,0,0,0.3) 90%, transparent 100%); -webkit-mask: radial-gradient(ellipse at center, black 40%, rgba(0,0,0,0.9) 60%, rgba(0,0,0,0.7) 70%, rgba(0,0,0,0.5) 80%, rgba(0,0,0,0.3) 90%, transparent 100%);">
+                        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255, 248, 220, 0.75);"></div>
+                        <div style="position: relative; z-index: 2;">
+                            <h4>מפעל לשינון וחזרה על החומר הנלמד בין כותלי הישיבה</h4>
+                            <div style="padding: 10px; margin: 8px 0;">
+                                <p style="color: #2C1810; padding: 8px; text-shadow: none; font-size: 30px; line-height: 1.4;">
+                                    הבחורים זוכים לשליטה מוחלטת בחומר הנלמד תוך פיתוח ביטחון זכרון ויכולת ניתוח מעמיקה. במבחן זה שמתקיים בסוף זמן בני הישיבה זוכים לקנות ידע עצום במסכת הנלמדת ע"י החזרה למבחן זה.
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="leader-card">
-                    <div class="leader-text">
-                        <h3>הגה"ג ר' משה צדקה שליט"א</h3>
-                        <h4>ראש ישיבת פורת יוסף</h4>
-                        <p>במהלך ימי ההכנה לימים הנוראים, זכתה הישיבה לביקורו של אחד מגדולי הדור, מהמאורים הבולטים בעולם התורה, אשר מלווה את הישיבה לאורך השנים ביד נאמנה. מעורבותו והשגחתו על סדרי הנהגת הישיבה, כמו גם ההיוועצות הקבועה עמו בכל החלטה , מהוות יסוד איתן בדרכה החינוכית והרוחנית. ביקורו המרומם כלל דברי הדרכה, חיזוק והתעוררות, אשר הותירו רושם עז ועמוק בלב התלמידים וסגל הישיבה, ויהיו לנו למורת דרך גם להבא</p>
-                    </div>
-                    <div class="leader-image">
-                        <div style="display: flex; flex-direction: column; gap: 10px; height: 100%; justify-content: center; align-items: center;">
-                            <img src="https://i.postimg.cc/15Yz7t2r/p1190783-optimized-optimized.jpg" alt="הרב משה צדקה שליט״א" style="width: 100%; max-width: 450px; height: 350px; object-fit: cover; border-radius: 5px; border: 5px solid white; box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);" />
-                        </div>
-                    </div>
+                <div class="project-image leader-image">
+                    <img src="https://i.postimg.cc/qR9tF7zF/img-0790-optimized.jpg" alt="ותלמוד בידו" />
                 </div>
             </div>
-        </div>
 
-        <div id="contact-page" class="page">
-            <div class="page-content">
-                <h1>מדור תרומות</h1>
-
-                <div class="opening-hours">
-                    <p style="text-align: center; line-height: 1.2;">
-                        "כפי ריבוי הלומדים – כך גודל הצרכים ללומדים"<br>
-                        ב"ה, כותלי בית המדרש שוקקים בעמל התורה, והספסלים כבר כמעט אינם מספיקים.
-                        אבל עם ריבוי בני עליה, באים גם צרכי המקום.<br>
-                        זכות נדירה להשתתף בגידול הדור הבא של תלמידי חכמים.<br>
-                        <h1>לתרומות נא לפנות באחת מהדרכים המפורטות כאן:</h1>
+            <div class="leader-card">
+                <div class="leader-text">
+                    <h3>לחידודי</h3>
+                    <h4>מפעל לשינון והבנת דבר מתוך דבר</h4>
+                    <p> מבחנים ייחודיים המעודדים חשיבה מעמיקה, פיתוח תובנות, והסקת מסקנות. כל מבחן שלנו הוא מסע של הבנה לא רק לדעת את התשובה, אלא להבין את הדרך אליה.</p>
+                </div>
+                <div class="leader-image">
+                    <img src="https://i.postimg.cc/V60CZrBx/optimized.png" style="object-position: top center;" />
+                </div>
+            </div>
+            <div class="leader-card">
+                <div class="leader-text">
+                    <h3>חפץ חיים</h3>
+                    <h4>מפעל להלכות לשון הרע בספר </h4>
+                    <h4>"חפץ חיים"</h4>
+                    <p>
+                        מפעל "חפץ חיים" פועל בישיבתנו כמסגרת מרוממת של חיזוק הדיבור ויראת שמיים, דווקא בשעות שבין הסדרים,
+                        בחורי הישיבה מתאספים בחברותות קבועות ללימוד הלכות שמירת הלשון מתוך הספר חפץ חיים,
+                        מעת לעת מתכבדת הישיבה באירוח רבנים חשובים, המעבירים שיעורים מוסריים ועיוניים בנושא, והורדת הדברים הלכה למעשה.
                     </p>
                 </div>
+                <div class="leader-image">
+                    <img src="https://i.postimg.cc/Z51HbSsz/optimized.png" alt="חפץ חיים" style="object-position: top center;" />
+                </div>
+            </div>
+            <div class="leader-card">
+                <div class="leader-text">
+                    <h3>סדר מוצאי שביעי</h3>
+                    <h4>מפעל לחיזוק הלימוד במצאי שבת </h4>
+                    <p>
+                        מדי מוצ"ש מתקיים סדר לימוד תוסס ומעמיק, מתוך רצינות, עיון וברוב עם ממש כמו בבית המדרש של אמצע השבוע. לאחר הלימוד, מוגשת סעודת מלכים, מושקעת ומוקפדת, כראוי לכבודה של תורה.
+                    </p>
+                </div>
+                <div class="leader-image">
+                    <img src="https://i.postimg.cc/FzWK0Q5Q/img-9444-optimized.jpg" alt="סדר-מוצאי-שבת" style="object-position: top center;" />
+                </div>
+            </div>
+        </div>
+    </div>
 
-                <div class="contact-info">
-                    <div class="contact-card">
-                        <h2>כתובת</h2>
-                        <p>רחוב חזון איש 45<br>ירושלים, שכונת רמת שלמה. </p>
+    <div id="events-page" class="page events-page">
+        <div class="page-content">
+            <div class="title-box" style="margin-top: 25px;">
+                <h2>מראות הוד מביקורי מרנן ורבנן גדולי ומאורי הדור שליט"א</h2>
+            </div>
+            <div class="leader-card">
+                <div class="leader-text">
+                    <h3>הגה"ג ר' דוד כהן שליט"א</h3>
+                    <h4>ראש ישיבת חברון</h4>
+                    <p>בערב ימי הרחמים והסליחות, כאשר הלבבות פתוחים לשינוי והתעלות, זכינו למעמד נשגב עם בואו של הגאון הגדול ר' דוד כהן שליט"א. דבריו חדרו ללבבות בעומק נדיר, והקרינו קדושה ורצינות שהעלו את רוח הבחורים לגבהים חדשים. ההתחזקות שניטעה הופכים את הביקור לזיכרון בל יימחה, אשר ישמש מצפן רוחני לבני הישבה לאורך כל השנה, ובמיוחד בימים הנשגבים שעמדו בפתח.</p>
+                </div>
+                <div class="leader-image">
+                    <div style="display: flex; flex-direction: column; gap: 10px; height: 100%; justify-content: center; align-items: center;">
+                        <img src="https://i.postimg.cc/DzWS6FmM/optimized.jpg" alt="הרב דוד כהן שליט״א" style="width: 350px; height: 175px; object-fit: cover; border-radius: 5px; border: 5px solid white; box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);" />
+                        <img src="https://i.postimg.cc/rFmgT0H0/p1190138-optimized.jpg" alt="ביקור הרב דוד כהן בישיבה" style="width: 350px; height: 175px; object-fit: cover; border-radius: 5px; border: 5px solid white; box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);" />
                     </div>
-                    <div class="contact-card">
-                        <h2>טלפון</h2>
-                        <p>053-414-28-93</p>
-                    </div>
-                    <div class="contact-card">
-                        <h2>אימייל</h2>
-                        <h4 style="font-size: 30px;">  ליצירת קשר והצטרפות לציבור התורמים – הקלק כאן על כתובת הדאו"ל</h4>
-                        <p style="font-size: 32px; transform: scaleY(1.4) scaleX(0.8); color: #FFD700; cursor: pointer; transition: all 0.3s ease;"
-                           onclick="openEmail()"
-                           onmouseover="this.style.textShadow='0 0 15px rgba(255,215,0,0.8)'; this.style.transform='scaleY(1.4) scaleX(0.8) scale(1.05)'"
-                           onmouseout="this.style.textShadow='none'; this.style.transform='scaleY(1.4) scaleX(0.8)'">
-                            s0534142893@gmail.com
-                        </p>
-                        <h4 style="font-size: 25px;">ואנו נשתדל לשוב אליכם במהרה</h4>
+                </div>
+            </div>
+            <div class="leader-card">
+                <div class="leader-text">
+                    <h3>הגה"ג ר' משה צדקה שליט"א</h3>
+                    <h4>ראש ישיבת פורת יוסף</h4>
+                    <p>במהלך ימי ההכנה לימים הנוראים, זכתה הישיבה לביקורו של אחד מגדולי הדור, מהמאורים הבולטים בעולם התורה, אשר מלווה את הישיבה לאורך השנים ביד נאמנה. מעורבותו והשגחתו על סדרי הנהגת הישיבה, כמו גם ההיוועצות הקבועה עמו בכל החלטה , מהוות יסוד איתן בדרכה החינוכית והרוחנית. ביקורו המרומם כלל דברי הדרכה, חיזוק והתעוררות, אשר הותירו רושם עז ועמוק בלב התלמידים וסגל הישיבה, ויהיו לנו למורת דרך גם להבא</p>
+                </div>
+                <div class="leader-image">
+                    <div style="display: flex; flex-direction: column; gap: 10px; height: 100%; justify-content: center; align-items: center;">
+                        <img src="https://i.postimg.cc/15Yz7t2r/p1190783-optimized-optimized.jpg" alt="הרב משה צדקה שליט״א" style="width: 100%; max-width: 450px; height: 350px; object-fit: cover; border-radius: 5px; border: 5px solid white; box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);" />
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <script>
-            function scrollToTop() {
-                window.scrollTo({
-                    top: 0,
-                    left: 0,
-                    behavior: 'instant'
-                });
+    <div id="contact-page" class="page">
+        <div class="page-content">
+            <h1>מדור תרומות</h1>
+
+            <div class="opening-hours">
+                <p style="text-align: center; line-height: 1.2;">
+                    "כפי ריבוי הלומדים – כך גודל הצרכים ללומדים"<br>
+                    ב"ה, כותלי בית המדרש שוקקים בעמל התורה, והספסלים כבר כמעט אינם מספיקים.
+                    אבל עם ריבוי בני עליה, באים גם צרכי המקום.<br>
+                    זכות נדירה להשתתף בגידול הדור הבא של תלמידי חכמים.<br>
+                    <h1>לתרומות נא לפנות באחת מהדרכים המפורטות כאן:</h1>
+                </p>
+            </div>
+
+            <div class="contact-info">
+                <div class="contact-card">
+                    <h2>כתובת</h2>
+                    <p>רחוב חזון איש 45<br>ירושלים, שכונת רמת שלמה. </p>
+                </div>
+                <div class="contact-card">
+                    <h2>טלפון</h2>
+                    <p>053-414-28-93</p>
+                </div>
+                <div class="contact-card">
+                    <h2>אימייל</h2>
+                    <h4 style="font-size: 30px;">  ליצירת קשר והצטרפות לציבור התורמים – הקלק כאן על כתובת הדאו"ל</h4>
+                    <p style="font-size: 32px; transform: scaleY(1.4) scaleX(0.8); color: #FFD700; cursor: pointer; transition: all 0.3s ease;"
+                       onclick="openEmail()"
+                       onmouseover="this.style.textShadow='0 0 15px rgba(255,215,0,0.8)'; this.style.transform='scaleY(1.4) scaleX(0.8) scale(1.05)'"
+                       onmouseout="this.style.textShadow='none'; this.style.transform='scaleY(1.4) scaleX(0.8)'">
+                        s0534142893@gmail.com
+                    </p>
+                    <h4 style="font-size: 25px;">ואנו נשתדל לשוב אליכם במהרה</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // הגנה מפני העתקה - חסימת לחיצה ימנית
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // חסימת מקשי קיצור דרך
+        document.addEventListener('keydown', function (e) {
+            // חסימת Ctrl+A (בחירת הכל)
+            if (e.ctrlKey && e.key === 'a') {
+                e.preventDefault();
+                return false;
             }
 
-            function goToHomePage() {
+            // חסימת Ctrl+C (העתקה)
+            if (e.ctrlKey && e.key === 'c') {
+                e.preventDefault();
+                return false;
+            }
+
+            // חסימת Ctrl+V (הדבקה)
+            if (e.ctrlKey && e.key === 'v') {
+                e.preventDefault();
+                return false;
+            }
+
+            // חסימת F12 (Developer Tools)
+            if (e.key === 'F12') {
+                e.preventDefault();
+                return false;
+            }
+
+            // חסימת Ctrl+U (view source)
+            if (e.ctrlKey && e.key === 'u') {
+                e.preventDefault();
+                return false;
+            }
+
+            // חסימת Ctrl+Shift+I (Developer Tools)
+            if (e.ctrlKey && e.shiftKey && e.key === 'I') {
+                e.preventDefault();
+                return false;
+            }
+
+            // חסימת Ctrl+Shift+J (Console)
+            if (e.ctrlKey && e.shiftKey && e.key === 'J') {
+                e.preventDefault();
+                return false;
+            }
+
+            // חסימת Ctrl+Shift+C (Inspect Element)
+            if (e.ctrlKey && e.shiftKey && e.key === 'C') {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        // מניעת גרירת אלמנטים
+        document.addEventListener('dragstart', function (e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // מניעת בחירת טקסט באמצעות JavaScript נוסף - אבל לא על שדה הסיסמה
+        document.onselectstart = function (e) {
+            if (e.target && e.target.id === 'password-input') {
+                return true; // אפשר בחירה בשדה הסיסמה
+            }
+            return false;
+        };
+
+        document.onmousedown = function (e) {
+            if (e.target && e.target.id === 'password-input') {
+                return true; // אפשר לחיצה על שדה הסיסמה
+            }
+            return false;
+        };
+
+        // העכבר ילך אוטומטית לשדה הסיסמה כשהעמוד נטען
+        window.addEventListener('load', function () {
+            const passwordInput = document.getElementById('password-input');
+            if (passwordInput) {
+                passwordInput.focus(); // מעביר את הפוקוס לשדה הסיסמה
+            }
+            scrollToTop();
+        });
+
+        // חסימת Print Screen (עובד רק בחלק מהדפדפנים)
+        document.addEventListener('keyup', function (e) {
+            if (e.key === 'PrintScreen') {
+                navigator.clipboard.writeText('');
+            }
+        });
+
+        // מניעת העתקה באמצעות clipboard API - אבל לא בשדה הסיסמה
+        document.addEventListener('copy', function (e) {
+            if (e.target && e.target.id === 'password-input') {
+                return true; // אפשר העתקה בשדה הסיסמה
+            }
+            e.preventDefault();
+            return false;
+        });
+
+        // מניעת הדבקה - אבל לא בשדה הסיסמה
+        document.addEventListener('paste', function (e) {
+            if (e.target && e.target.id === 'password-input') {
+                return true; // אפשר הדבקה בשדה הסיסמה
+            }
+            e.preventDefault();
+            return false;
+        });
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: 'instant'
+            });
+        }
+
+        function goToHomePage() {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active-page');
+            });
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            document.getElementById('home-page').classList.add('active-page');
+            document.querySelector('.nav-btn').classList.add('active');
+
+            document.querySelectorAll('.riboim-wrapper div').forEach(div => {
+                div.classList.remove('flipped');
+            });
+
+            scrollToTop();
+        }
+
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active-page');
+            });
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            document.getElementById(pageId + '-page').classList.add('active-page');
+
+            if (event && event.target) {
+                event.target.classList.add('active');
+            }
+
+            scrollToTop();
+        }
+
+        function navigateToEvents(element) {
+            navigateWithFlip(element, 'events-page', 3);
+        }
+
+        function navigateToTorah(element) {
+            navigateWithFlip(element, 'torah-page', -1);
+        }
+
+        function navigateToChavruta(element) {
+            navigateWithFlip(element, 'chavruta-page', -1);
+        }
+
+        function navigateWithFlip(element, pageId, navButtonIndex) {
+            element.classList.add('flipped');
+
+            setTimeout(function () {
                 document.querySelectorAll('.page').forEach(page => {
                     page.classList.remove('active-page');
                 });
@@ -1064,147 +1262,97 @@ border: 17px solid #800000; text-align: center; box-shadow: 0 20px 40px rgba(0, 
                     btn.classList.remove('active');
                 });
 
-                document.getElementById('home-page').classList.add('active-page');
-                document.querySelector('.nav-btn').classList.add('active');
+                document.getElementById(pageId).classList.add('active-page');
 
-                document.querySelectorAll('.riboim-wrapper div').forEach(div => {
-                    div.classList.remove('flipped');
-                });
-
-                scrollToTop();
-            }
-
-            function showPage(pageId) {
-                document.querySelectorAll('.page').forEach(page => {
-                    page.classList.remove('active-page');
-                });
-
-                document.querySelectorAll('.nav-btn').forEach(btn => {
-                    btn.classList.remove('active');
-                });
-
-                document.getElementById(pageId + '-page').classList.add('active-page');
-
-                if (event && event.target) {
-                    event.target.classList.add('active');
-                }
-
-                scrollToTop();
-            }
-
-            function navigateToEvents(element) {
-                navigateWithFlip(element, 'events-page', 3);
-            }
-
-            function navigateToTorah(element) {
-                navigateWithFlip(element, 'torah-page', -1);
-            }
-
-            function navigateToChavruta(element) {
-                navigateWithFlip(element, 'chavruta-page', -1);
-            }
-
-            function navigateWithFlip(element, pageId, navButtonIndex) {
-                element.classList.add('flipped');
-
-                setTimeout(function () {
-                    document.querySelectorAll('.page').forEach(page => {
-                        page.classList.remove('active-page');
-                    });
-
-                    document.querySelectorAll('.nav-btn').forEach(btn => {
-                        btn.classList.remove('active');
-                    });
-
-                    document.getElementById(pageId).classList.add('active-page');
-
-                    if (navButtonIndex >= 0) {
-                        const navBtn = document.querySelectorAll('.nav-btn')[navButtonIndex];
-                        if (navBtn) {
-                            navBtn.classList.add('active');
-                        }
-                    }
-
-
-                    scrollToTop();
-                }, 600);
-            }
-
-            window.addEventListener('load', function () {
-                scrollToTop();
-            });
-
-            window.addEventListener('beforeunload', function () {
-                scrollToTop();
-            });
-
-            document.addEventListener('DOMContentLoaded', function () {
-                scrollToTop();
-            });
-
-            let startX = 0;
-            let startY = 0;
-            let endX = 0;
-            let endY = 0;
-
-            document.addEventListener('touchstart', function (e) {
-                startX = e.touches[0].clientX;
-                startY = e.touches[0].clientY;
-            });
-
-            document.addEventListener('touchend', function (e) {
-                endX = e.changedTouches[0].clientX;
-                endY = e.changedTouches[0].clientY;
-
-                const deltaX = endX - startX;
-                const deltaY = endY - startY;
-
-                if (Math.abs(deltaX) > Math.abs(deltaY) && deltaX > 100) {
-                    const currentPage = document.querySelector('.page.active-page').id;
-                    if (currentPage !== 'home-page') {
-                        goToHomePage();
+                if (navButtonIndex >= 0) {
+                    const navBtn = document.querySelectorAll('.nav-btn')[navButtonIndex];
+                    if (navBtn) {
+                        navBtn.classList.add('active');
                     }
                 }
-            });
 
-            document.addEventListener('keydown', function (e) {
-                if (e.key === 'ArrowUp') {
-                    const currentPage = document.querySelector('.page.active-page').id;
-                    if (currentPage !== 'home-page') {
-                        goToHomePage();
-                        e.preventDefault();
-                    }
-                }
-            });
-
-            function openEmail() {
-                const subject = 'תרומה לישיבת אהל תורה';
-                const body = 'שלום רב,\n\nאני רוצה לתרום לישיבת אהל תורה.\n\nתודה רבה';
-                const encodedSubject = encodeURIComponent(subject);
-                const encodedBody = encodeURIComponent(body);
-                window.location.href = `mailto:s0534142893@gmail.com?subject=${encodedSubject}&body=${encodedBody}`;
-            }
-        </script>
-
-    </body>
-<script>
-    function checkPassword() {
-        const password = document.getElementById('password-input').value;
-        const correctPassword = 'SC5541'; // שנה את הסיסמה כאן
-
-        if (password === correctPassword) {
-            document.getElementById('password-screen').style.display = 'none';
-            document.getElementById('error-message').textContent = '';
-        } else { 
-            document.getElementById('error-message').textContent = 'סיסמה שגויה! נסו שוב';
-            document.getElementById('password-input').value = '';
+                scrollToTop();
+            }, 600);
         }
-    }
 
-    document.getElementById('password-input').addEventListener('keypress', function (e) {
-        if (e.key === 'Enter') {
-            checkPassword();
+        window.addEventListener('load', function () {
+            const passwordInput = document.getElementById('password-input');
+            if (passwordInput) {
+                passwordInput.focus(); // מעביר את הפוקוס לשדה הסיסמה
+            }
+            scrollToTop();
+        });
+
+        window.addEventListener('beforeunload', function () {
+            scrollToTop();
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            scrollToTop();
+        });
+
+        let startX = 0;
+        let startY = 0;
+        let endX = 0;
+        let endY = 0;
+
+        document.addEventListener('touchstart', function (e) {
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
+        });
+
+        document.addEventListener('touchend', function (e) {
+            endX = e.changedTouches[0].clientX;
+            endY = e.changedTouches[0].clientY;
+
+            const deltaX = endX - startX;
+            const deltaY = endY - startY;
+
+            if (Math.abs(deltaX) > Math.abs(deltaY) && deltaX > 100) {
+                const currentPage = document.querySelector('.page.active-page').id;
+                if (currentPage !== 'home-page') {
+                    goToHomePage();
+                }
+            }
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'ArrowUp') {
+                const currentPage = document.querySelector('.page.active-page').id;
+                if (currentPage !== 'home-page') {
+                    goToHomePage();
+                    e.preventDefault();
+                }
+            }
+        });
+
+        function openEmail() {
+            const subject = 'תרומה לישיבת אהל תורה';
+            const body = 'שלום רב,\n\nאני רוצה לתרום לישיבת אהל תורה.\n\nתודה רבה';
+            const encodedSubject = encodeURIComponent(subject);
+            const encodedBody = encodeURIComponent(body);
+            window.location.href = `mailto:s0534142893@gmail.com?subject=${encodedSubject}&body=${encodedBody}`;
         }
-    });
-</script>
+
+        function checkPassword() {
+            const password = document.getElementById('password-input').value;
+            const correctPassword = 'SC5541'; // שנה את הסיסמה כאן
+
+            if (password === correctPassword) {
+                document.getElementById('password-screen').style.display = 'none';
+                document.getElementById('error-message').textContent = '';
+            } else {
+                document.getElementById('error-message').textContent = 'סיסמה שגויה! נסו שוב';
+                document.getElementById('password-input').value = '';
+            }
+        }
+
+        document.getElementById('password-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+    </script>
+
+</body>
 </html>
