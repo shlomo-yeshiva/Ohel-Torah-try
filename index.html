@@ -7,6 +7,86 @@
     <title>אהל תורה</title>
 
     <style>
+        /* 🎯 אפקטים משופרים - טקסט ותמונות לפי כיוון הכרטיסיה */
+        .text-slide-right {
+            opacity: 0;
+            transform: translateX(100px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .text-slide-left {
+            opacity: 0;
+            transform: translateX(-100px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .text-slide-right.text-visible,
+        .text-slide-left.text-visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* אפקטי תמונות משופרים */
+        .image-slide-right {
+            opacity: 0;
+            transform: translateX(120px) scale(0.85);
+            transition: all 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .image-slide-left {
+            opacity: 0;
+            transform: translateX(-120px) scale(0.85);
+            transition: all 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .image-slide-right.image-visible,
+        .image-slide-left.image-visible {
+            opacity: 1;
+            transform: translateX(0) scale(1);
+        }
+
+        /* אפקטים נוספים לטקסט */
+        .leader-text.text-visible h3,
+        .project-text.text-visible h3 {
+            animation: titlePop 0.6s ease 0.2s both;
+        }
+
+        .leader-text.text-visible h4,
+        .project-text.text-visible h4 {
+            animation: titlePop 0.6s ease 0.4s both;
+        }
+
+        .leader-text.text-visible p,
+        .project-text.text-visible p {
+            animation: titlePop 0.6s ease 0.6s both;
+        }
+
+        /* אפקטים נוספים לתמונות */
+        .leader-image.image-visible img,
+        .project-image.image-visible img {
+            animation: imageZoomRotate 0.8s ease 0.3s both;
+        }
+
+        @keyframes titlePop {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes imageZoomRotate {
+            0% { 
+                transform: scale(0.8) rotate(-3deg);
+                opacity: 0;
+            }
+            50% { 
+                transform: scale(1.02) rotate(1deg);
+            }
+            100% { 
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+        }
+
         @font-face {
             font-family: 'EFT_Atara';
             src: url('EFT_Atara.woff') format('woff');
@@ -53,7 +133,6 @@
             padding: 0;
             font-family: 'Guttman Mantova', serif;
             background-color: #6E0000;
-            /* צבע רקע יותר קרמי וחי */
             overflow-x: hidden;
             max-width: 100vw;
             box-sizing: border-box;
@@ -68,14 +147,12 @@
             width: 100%;
             height: 25vh;
             background-color: rgba(110, 0, 0, 0.95);
-            /* אדום יותר עמוק */
             backdrop-filter: blur(10px);
             z-index: 1000;
             display: flex;
             align-items: center;
             justify-content: center;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
-            /* צל חזק יותר */
         }
 
         #home-page {
@@ -99,7 +176,6 @@
 
         .nav-btn {
             background-color: #A8301F;
-            /* אדום יותר עמוק */
             border: 1.5px solid white;
             color: white;
             padding: 10px 1px;
@@ -118,7 +194,6 @@
             white-space: nowrap;
             line-height: 0.8;
             box-shadow: 0 12px 25px rgba(0, 0, 0, 1.0), 0 6px 12px rgba(0, 0, 0, 0.9);
-            /* צלים חזקים יותר */
             box-sizing: border-box;
             overflow: hidden;
         }
@@ -155,14 +230,12 @@
             margin: 12px auto;
             padding: 20px;
             background-color: rgba(245, 230, 211, 0.95);
-            /* רקע יותר קרמי */
             border-radius: 10px;
             box-shadow: 0 12px 25px rgba(0, 0, 0, 1.0), 0 6px 12px rgba(0, 0, 0, 0.9);
         }
 
         .page-content h1 {
             color: #6E0000;
-            /* אדום עמוק יותר */
             text-align: center;
             font-size: 75px;
             margin-bottom: 15px;
@@ -190,7 +263,6 @@
             font-size: 40px;
             line-height: 1.6;
             color: #2A1A10;
-            /* טקסט כהה יותר לניגודיות */
             text-align: right;
             font-weight: bold;
         }
@@ -199,101 +271,99 @@
         .contact-info {
             display: flex;
             flex-direction: row;
-            /* וודא שזה בשורה אחת */
             justify-content: center;
-            /* מרחק שווה סביב כל מלבן */
             align-items: center;
             margin: 20px auto;
             padding: 0 40px;
             gap: 40px;
-            /* הוסף את השורה הזו - זה הרווח בין המלבנים */
         }
 
-/* 🔧 כרטיסיות רחבות יותר עם פחות רווח */
+        .contact-info {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            margin: 20px auto;
+            padding: 0 20px;
+            gap: 15px;
+        }
 
-.contact-info {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    margin: 20px auto;
-    padding: 0 20px; /* 👈 הקטנתי מ-40px */
-    gap: 15px; /* 👈 הקטנתי מ-40px - פחות רווח */
-}
+        .info-card,
+        .contact-card {
+            background-color: #B8904A;
+            padding: 25px;
+            border-radius: 10px;
+            color: white;
+            text-align: center;
+            flex: 1;
+            height: 380px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 1.0), 0 6px 12px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            box-sizing: border-box;
+            flex-shrink: 0;
+            margin: 0;
+        }
 
-.info-card,
-.contact-card {
-    background-color: #B8904A;
-    padding: 25px;
-    border-radius: 10px;
-    color: white;
-    text-align: center;
-    flex: 1; /* ← הוסף את השורה הזו */
-    height: 380px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 1.0), 0 6px 12px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-    box-sizing: border-box;
-    flex-shrink: 0;
-    margin: 0;
-}
+        .info-card h3,
+        .contact-card h3 {
+            font-size: 50px;
+            margin-bottom: 10px;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
 
-.info-card h3,
-.contact-card h3 {
-    font-size: 50px;
-    margin-bottom: 10px;
-    color: white;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-}
+        .info-card h2,
+        .contact-card h2 {
+            font-size: 50px;
+            margin-bottom: 10px;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
 
-.info-card h2,
-.contact-card h2 {
-    font-size: 50px;
-    margin-bottom: 10px;
-    color: white;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-}
+        .info-card p,
+        .contact-card p {
+            font-size: 35px;
+            color: white;
+            text-align: center;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            line-height: 1.3;
+            margin: 5px 0;
+        }
 
-.info-card p,
-.contact-card p {
-    font-size: 35px;
-    color: white;
-    text-align: center;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-    line-height: 1.3;
-    margin: 5px 0;
-}
-.Quote-1 {
-    background-color: #B8904A;
-    padding: 25px;
-    border-radius: 10px;
-    color: white;
-    text-align: center;
-    width: 380px;
-    height: 380px;
-    flex: 1; /* ← הוסף את השורה הזו */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 1.0), 0 6px 12px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-    box-sizing: border-box;
-    flex-shrink: 0;
-    margin: 0;
-}
-.contact-card h4 {
-    font-size: 24px;
-    margin: 8px 0;
-    color: white;
-    line-height: 1.2;
-}
+        .Quote-1 {
+            background-color: #B8904A;
+            padding: 25px;
+            border-radius: 10px;
+            color: white;
+            text-align: center;
+            width: 380px;
+            height: 380px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 1.0), 0 6px 12px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            box-sizing: border-box;
+            flex-shrink: 0;
+            margin: 0;
+        }
 
-.contact-card p[onclick] {
-    font-size: 28px !important;
-    margin: 8px 0;
-}
+        .contact-card h4 {
+            font-size: 24px;
+            margin: 8px 0;
+            color: white;
+            line-height: 1.2;
+        }
+
+        .contact-card p[onclick] {
+            font-size: 28px !important;
+            margin: 8px 0;
+        }
+
         .schedule {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -303,7 +373,6 @@
 
         .day-schedule {
             background-color: #A8301F;
-            /* אדום עמוק יותר */
             padding: 20px;
             border-radius: 10px;
             color: white;
@@ -334,7 +403,6 @@
 
         .opening-hours {
             background-color: #B8904A;
-            /* זהוב עמוק יותר */
             padding: 20px;
             border-radius: 10px;
             color: white;
@@ -366,7 +434,6 @@
 
         .content-box {
             background-color: #F0DCC9;
-            /* קרמי יותר חי */
             padding: 20px;
             border-radius: 5px;
             color: white;
@@ -389,7 +456,6 @@
             text-align: center;
             font-size: 70px;
             color: #6E0000;
-            /* אדום עמוק יותר */
             margin-bottom: 15px;
             border-bottom: 1.5px solid #8B4513;
             padding-bottom: 8px;
@@ -399,7 +465,6 @@
 
         .title-box {
             background-color: #6E0000;
-            /* אדום עמוק יותר */
             padding: 15px;
             border-radius: 10px;
             color: white;
@@ -469,13 +534,11 @@
             font-size: 23vw;
             font-family: 'EFT_Talpiot', serif;
             background: linear-gradient(45deg, #FFD700, #FF8C00, #FF6347, #FFD700);
-            /* הוספת גוון אדום-כתום */
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             color: transparent;
             text-shadow: 0 0 15px rgba(255, 215, 0, 1), 0 0 25px rgba(255, 140, 0, 0.9), 0 0 35px rgba(255, 99, 71, 0.7);
-            /* צלים יותר חיים */
             margin: 0;
             z-index: 2;
             font-weight: normal;
@@ -491,7 +554,6 @@
             width: 100%;
             height: 100%;
             background-color: rgba(110, 0, 0, 0.4);
-            /* מסכה אדומה עמוקה יותר */
             z-index: 1;
         }
 
@@ -501,7 +563,6 @@
             left: 0;
             width: 100%;
             background-color: rgba(184, 144, 74, 0.95);
-            /* זהוב עמוק יותר */
             border-radius: 20px 20px 20px 20px;
             display: flex;
             flex-direction: column;
@@ -539,12 +600,10 @@
             align-items: center;
             gap: 25px;
             background-color: #F0DCC9;
-            /* קרמי יותר חי */
             border-radius: 15px;
             padding: 20px;
             margin: 0 auto 20px auto;
             box-shadow: 0 18px 35px rgba(0, 0, 0, 0.9), 0 10px 18px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.3);
-            /* צלים וגלוסינס */
             backdrop-filter: blur(10px);
         }
 
@@ -553,7 +612,6 @@
             align-items: center;
             gap: 25px;
             background-color: #F0DCC9;
-            /* קרמי יותר חי */
             border-radius: 15px;
             padding: 20px;
             margin-bottom: 20px;
@@ -599,7 +657,6 @@
             font-family: 'Miriam', sans-serif;
             position: relative;
             background: linear-gradient(90deg, #B8904A, #D4A574, #A8301F);
-            /* צבעים עמוקים יותר */
             padding: 10px 5px;
             text-align: center;
             border-radius: 5px;
@@ -612,7 +669,6 @@
         .project-text h4 {
             font-size: 45px;
             color: #A8301F;
-            /* אדום עמוק יותר */
             margin: 0 0 10px 0;
             font-weight: bold;
             text-align: center;
@@ -622,7 +678,6 @@
         .project-text p {
             font-size: 25px;
             color: #2A1A10;
-            /* טקסט כהה יותר */
             line-height: 1.5;
             margin: 0;
             font-weight: bold;
@@ -653,7 +708,6 @@
             font-family: 'Miriam', sans-serif;
             position: relative;
             background: linear-gradient(90deg, #B8904A, #D4A574, #A8301F);
-            /* צבעים עמוקים יותר */
             padding: 10px 5px;
             text-align: center;
             border-radius: 5px;
@@ -666,7 +720,6 @@
         .leader-text h4 {
             font-size: 45px;
             color: #A8301F;
-            /* אדום עמוק יותר */
             margin: 0 0 10px 0;
             font-weight: bold;
             text-align: center;
@@ -676,7 +729,6 @@
         .leader-text p {
             font-size: 25px;
             color: #2A1A10;
-            /* טקסט כהה יותר */
             line-height: 1.5;
             margin: 0;
             font-weight: bold;
@@ -736,17 +788,6 @@
             z-index: 3;
         }
 
-        .riboim-wrapper {
-            display: flex;
-            flex-direction: row;
-            gap: 75px;
-            justify-content: center;
-            flex-wrap: wrap;
-            width: 80%;
-            height: auto;
-            margin-top: 25px;
-        }
-
         .riboim-wrapper div {
             width: 225px;
             height: 225px;
@@ -759,7 +800,6 @@
             font-weight: bold;
             color: white;
             background-color: rgba(168, 48, 31, 0.95);
-            /* אדום עמוק יותר */
             transition: all 0.3s ease;
             text-align: center;
             line-height: 0.9;
@@ -818,7 +858,6 @@
 
         .event-card {
             background-color: #B8904A;
-            /* זהוב עמוק יותר */
             padding: 20px;
             border-radius: 10px;
             color: white;
@@ -842,7 +881,6 @@
         .event-card .event-date {
             font-size: 35px;
             color: #FFE066;
-            /* זהב יותר חי */
             margin-bottom: 8px;
             font-weight: bold;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
@@ -878,7 +916,7 @@
 </head>
 
 <body>
-    <!-- הוסף כאן את מסך הסיסמה -->
+    <!-- מסך הסיסמה -->
     <div id="password-screen" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%;
 background: rgba(0, 0, 0, 0.5); display: flex;
 justify-content: center; align-items: center; z-index: 10000;">
@@ -939,7 +977,6 @@ border: 17px solid #6E0000; text-align: center; box-shadow: 0 25px 50px rgba(0, 
             </div>
         </div>
 
-        <!-- הריבוע הזה יהיה בחוץ לבד -->
         <div class="content-box">
             <p class="title">מספרם של בני הישיבה</p>
             <p style="color: #722F37;">בני הישיבה נמנים על סך 350 בחורים השוקדים על תלמודם בהתמדה נוראה.</p>
@@ -954,8 +991,6 @@ border: 17px solid #6E0000; text-align: center; box-shadow: 0 25px 50px rgba(0, 
             </p>
             <p style="color: #722F37;">לפיכך השיעורים שיש בתוכם מספר רב של לומדים מחולקים לשני מגידי שיעורים שונים.</p>
 
-
-            <!-- הריבוע החום יתחיל מכאן -->
             <div class="leadership-section">
                 <p style="color: #722F37; border-bottom: 8px double #A8301F; padding-bottom: 30px;">
                 <p class="title">פרטים על רבני הישיבה שליט"א</p>
@@ -981,17 +1016,19 @@ border: 17px solid #6E0000; text-align: center; box-shadow: 0 25px 50px rgba(0, 
                 <img src="https://i.postimg.cc/RZRPBrJp/optimized-optimized.jpg" alt="הרב שלמה קציין שליט" א" />
             </div>
         </div>
+        
         <div class="leader-card" style="position: relative; top: 0; margin-top: 20px; flex-direction: row-reverse;">
-    <div class="leader-text">
-        <h3>ראש הישיבה שליט"א</h3>
-        <h4>הרה"ג ר' שמעון מעולם שליט"א</h4>
-        <p class="short-info">בוגר ישיבת רינת התורה</p>
-        <p class="short-info">מכהן אף כר"מ לבני שיעור ג'</p>
-    </div>
-    <div class="leader-image">
-        <img src="https://i.postimg.cc/50Zg3bDy/optimized-optimized.jpg" alt="הרב שמעון מעולם שליט" />
-    </div>
-</div>
+            <div class="leader-text">
+                <h3>ראש הישיבה שליט"א</h3>
+                <h4>הרה"ג ר' שמעון מעולם שליט"א</h4>
+                <p class="short-info">בוגר ישיבת רינת התורה</p>
+                <p class="short-info">מכהן אף כר"מ לבני שיעור ג'</p>
+            </div>
+            <div class="leader-image">
+                <img src="https://i.postimg.cc/50Zg3bDy/optimized-optimized.jpg" alt="הרב שמעון מעולם שליט" />
+            </div>
+        </div>
+        
         <div class="leader-card">
             <div class="leader-text">
                 <h3>משגיח הרוחני בישיבה</h3>
@@ -1065,8 +1102,6 @@ border: 17px solid #6E0000; text-align: center; box-shadow: 0 25px 50px rgba(0, 
             </div>
         </div>
 
-
-
         <div class="leader-card" style="position: relative; top: 0; margin-top: 20px; flex-direction: row-reverse;">
             <div class="leader-text">
                 <h3>ר"מ לבני שיעור א'</h3>
@@ -1081,456 +1116,496 @@ border: 17px solid #6E0000; text-align: center; box-shadow: 0 25px 50px rgba(0, 
             </div>
         </div>
     </div>
-</div> <!-- 👈 הוספתי את השורה הזו - זה סוגר את about-page -->
 
-
-
-        <div id="shiurim-page" class="page">
-            <div class="page-content">
-                <div class="title-box" style="margin-top: 25px;">
-                    <h2>מפעלי קודש המתקימים בין כותלי </h2>
-                    <h2>בית המדרש</h2>
+    <div id="shiurim-page" class="page">
+        <div class="page-content">
+            <div class="title-box" style="margin-top: 25px;">
+                <h2>מפעלי קודש המתקימים בין כותלי </h2>
+                <h2>בית המדרש</h2>
+            </div>
+        </div>
+        
+        <div class="project-card leader-card">
+            <div class="project-text leader-text">
+                <h3>ותלמוד בידו</h3>
+                <div style="background-image: url('https://i.postimg.cc/tRWGPgtM/optimized.png'); background-size: 100% 100%; background-position: center 15%; background-repeat: no-repeat; position: relative; padding: 5px; border-radius: 15px; overflow: hidden; mask: radial-gradient(ellipse at center, black 40%, rgba(0,0,0,0.9) 60%, rgba(0,0,0,0.7) 70%, rgba(0,0,0,0.5) 80%, rgba(0,0,0,0.3) 90%, transparent 100%); -webkit-mask: radial-gradient(ellipse at center, black 40%, rgba(0,0,0,0.9) 60%, rgba(0,0,0,0.7) 70%, rgba(0,0,0,0.5) 80%, rgba(0,0,0,0.3) 90%, transparent 100%);">
+                    <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(240, 220, 201, 0.75);"></div>
+                    <div style="position: relative; z-index: 2;">
+                        <h4>מפעל לשינון וחזרה על החומר הנלמד בין כותלי הישיבה</h4>
+                        <div style="padding: 10px; margin: 8px 0;">
+                            <p style="color: #2C1810; padding: 8px; text-shadow: none; font-size: 30px; line-height: 1.4;">
+                                הבחורים זוכים לשליטה מוחלטת בחומר הנלמד תוך פיתוח ביטחון זכרון ויכולת ניתוח
+                                מעמיקה. במבחן זה שמתקיים בסוף זמן בני הישיבה זוכים לקנות ידע עצום במסכת הנלמדת
+                                ע"י החזרה למבחן זה.
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
-                <div class="project-card leader-card">
-                    <div class="project-text leader-text">
-                        <h3>ותלמוד בידו</h3>
-                        <div
-                            style="background-image: url('https://i.postimg.cc/tRWGPgtM/optimized.png'); background-size: 100% 100%; background-position: center 15%; background-repeat: no-repeat; position: relative; padding: 5px; border-radius: 15px; overflow: hidden; mask: radial-gradient(ellipse at center, black 40%, rgba(0,0,0,0.9) 60%, rgba(0,0,0,0.7) 70%, rgba(0,0,0,0.5) 80%, rgba(0,0,0,0.3) 90%, transparent 100%); -webkit-mask: radial-gradient(ellipse at center, black 40%, rgba(0,0,0,0.9) 60%, rgba(0,0,0,0.7) 70%, rgba(0,0,0,0.5) 80%, rgba(0,0,0,0.3) 90%, transparent 100%);">
-                            <div
-                                style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(240, 220, 201, 0.75);">
-                            </div>
-                            <div style="position: relative; z-index: 2;">
-                                <h4>מפעל לשינון וחזרה על החומר הנלמד בין כותלי הישיבה</h4>
-                                <div style="padding: 10px; margin: 8px 0;">
-                                    <p
-                                        style="color: #2C1810; padding: 8px; text-shadow: none; font-size: 30px; line-height: 1.4;">
-                                        הבחורים זוכים לשליטה מוחלטת בחומר הנלמד תוך פיתוח ביטחון זכרון ויכולת ניתוח
-                                        מעמיקה. במבחן זה שמתקיים בסוף זמן בני הישיבה זוכים לקנות ידע עצום במסכת הנלמדת
-                                        ע"י החזרה למבחן זה.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-image leader-image">
-                        <img src="https://i.postimg.cc/qR9tF7zF/img-0790-optimized.jpg" alt="ותלמוד בידו" />
-                    </div>
-                </div>
-
-                <div class="leader-card">
-                    <div class="leader-text">
-                        <h3>לחידודי</h3>
-                        <h4>מפעל לשינון והבנת דבר מתוך דבר</h4>
-                        <p> מבחנים ייחודיים המעודדים חשיבה מעמיקה, פיתוח תובנות, והסקת מסקנות. כל מבחן שלנו הוא מסע של
-                            הבנה לא רק לדעת את התשובה, אלא להבין את הדרך אליה.</p>
-                    </div>
-                    <div class="leader-image">
-                        <img src="https://i.postimg.cc/V60CZrBx/optimized.png" style="object-position: top center;" />
-                    </div>
-                </div>
-                <div class="leader-card">
-                    <div class="leader-text">
-                        <h3>חפץ חיים</h3>
-                        <h4>מפעל להלכות לשון הרע בספר </h4>
-                        <h4>"חפץ חיים"</h4>
-                        <p>
-                            מפעל "חפץ חיים" פועל בישיבתנו כמסגרת מרוממת של חיזוק הדיבור ויראת שמיים, דווקא בשעות שבין
-                            הסדרים,
-                            בחורי הישיבה מתאספים בחברותות קבועות ללימוד הלכות שמירת הלשון מתוך הספר חפץ חיים,
-                            מעת לעת מתכבדת הישיבה באירוח רבנים חשובים, המעבירים שיעורים מוסריים ועיוניים בנושא, והורדת
-                            הדברים הלכה למעשה.
-                        </p>
-                    </div>
-                    <div class="leader-image">
-                        <img src="https://i.postimg.cc/Z51HbSsz/optimized.png" alt="חפץ חיים"
-                            style="object-position: top center;" />
-                    </div>
-                </div>
-                <div class="leader-card">
-                    <div class="leader-text">
-                        <h3>סדר מוצאי שביעי</h3>
-                        <h4>מפעל לחיזוק הלימוד במצאי שבת </h4>
-                        <p>
-                            מדי מוצ"ש מתקיים סדר לימוד תוסס ומעמיק, מתוך רצינות, עיון וברוב עם ממש כמו בבית המדרש של
-                            אמצע השבוע. לאחר הלימוד, מוגשת סעודת מלכים, מושקעת ומוקפדת, כראוי לכבודה של תורה.
-                        </p>
-                    </div>
-                    <div class="leader-image">
-                        <img src="https://i.postimg.cc/FzWK0Q5Q/img-9444-optimized.jpg" alt="סדר-מוצאי-שבת"
-                            style="object-position: top center;" />
-                    </div>
-                </div>
-            
-        </div>
-
-        <div id="events-page" class="page events-page">
-            <div class="page-content">
-                <div class="title-box" style="margin-top: 25px;">
-                    <h2>מראות הוד מביקורי מרנן ורבנן גדולי ומאורי הדור שליט"א</h2>
-                </div>
+            <div class="project-image leader-image">
+                <img src="https://i.postimg.cc/qR9tF7zF/img-0790-optimized.jpg" alt="ותלמוד בידו" />
             </div>
-   <div class="leader-card">
-                    <div class="leader-text">
-                        <h3>הגה"ג ר' דוד כהן שליט"א</h3>
-                        <h4>ראש ישיבת חברון</h4>
-                        <p>בערב ימי הרחמים והסליחות, כאשר הלבבות פתוחים לשינוי והתעלות, זכינו למעמד נשגב עם בואו של
-                            הגאון הגדול ר' דוד כהן שליט"א. דבריו חדרו ללבבות בעומק נדיר, והקרינו קדושה ורצינות שהעלו את
-                            רוח הבחורים לגבהים חדשים. ההתחזקות שניטעה הופכים את הביקור לזיכרון בל יימחה, אשר ישמש מצפן
-                            רוחני לבני הישבה לאורך כל השנה, ובמיוחד בימים הנשגבים שעמדו בפתח.</p>
-                    </div>
-                    <div class="leader-image">
-                        <div
-                            style="display: flex; flex-direction: column; gap: 10px; height: 100%; justify-content: center; align-items: center;">
-                            <img src="https://i.postimg.cc/DzWS6FmM/optimized.jpg" alt="הרב דוד כהן שליט״א"
-                                style="width: 350px; height: 175px; object-fit: cover; border-radius: 5px; border: 5px solid white; box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);" />
-                            <img src="https://i.postimg.cc/rFmgT0H0/p1190138-optimized.jpg"
-                                alt="ביקור הרב דוד כהן בישיבה"
-                                style="width: 350px; height: 175px; object-fit: cover; border-radius: 5px; border: 5px solid white; box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);" />
-                        </div>
-                    </div>
-                </div>
-                <div class="leader-card">
-                    <div class="leader-text">
-                        <h3>הגה"ג ר' משה צדקה שליט"א</h3>
-                        <h4>ראש ישיבת פורת יוסף</h4>
-                        <p>במהלך ימי ההכנה לימים הנוראים, זכתה הישיבה לביקורו של אחד מגדולי הדור, מהמאורים הבולטים בעולם
-                            התורה, אשר מלווה את הישיבה לאורך השנים ביד נאמנה. מעורבותו והשגחתו על סדרי הנהגת הישיבה, כמו
-                            גם ההיוועצות הקבועה עמו בכל החלטה , מהוות יסוד איתן בדרכה החינוכית והרוחנית. ביקורו המרומם
-                            כלל דברי הדרכה, חיזוק והתעוררות, אשר הותירו רושם עז ועמוק בלב התלמידים וסגל הישיבה, ויהיו
-                            לנו למורת דרך גם להבא</p>
-                    </div>
-                    <div class="leader-image">
-                        <div
-                            style="display: flex; flex-direction: column; gap: 10px; height: 100%; justify-content: center; align-items: center;">
-                            <img src="https://i.postimg.cc/15Yz7t2r/p1190783-optimized-optimized.jpg"
-                                alt="הרב משה צדקה שליט״א"
-                                style="width: 100%; max-width: 450px; height: 350px; object-fit: cover; border-radius: 5px; border: 5px solid white; box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);" />
-                        </div>
-                    </div>
-                </div>
         </div>
 
-        <div id="contact-page" class="page">
-            <div class="page-content">
-                <h1>מדור תרומות</h1>
-
-                <div class="opening-hours">
-                    <p style="text-align: center; line-height: 1.2;">
-                        "כפי ריבוי הלומדים – כך גודל הצרכים ללומדים"<br>
-                        ב"ה, כותלי בית המדרש שוקקים בעמל התורה, והספסלים כבר כמעט אינם מספיקים.
-                        אבל עם ריבוי בני עליה, באים גם צרכי המקום.<br>
-                        זכות נדירה להשתתף בגידול הדור הבא של תלמידי חכמים.<br>
-                    <h1>לתרומות נא לפנות באחת מהדרכים המפורטות כאן:</h1>
-                    </p>
-                </div>
-
-                <div class="contact-info">
-                    <div class="contact-card">
-                        <h2>כתובת</h2>
-                        <p>רחוב חזון איש 45<br>ירושלים, שכונת רמת שלמה. </p>
-                    </div>
-                    <div class="contact-card">
-                        <h2>קישור לתרומה מאובטחת</h2>
-                        <p><a href="https://www.jgive.com/new/he/ils/charity-organizations/8808" style="color: #FFD700; font-size: 50px; text-decoration: underline; font-weight: bold; transition: all 0.3s ease;" onmouseover="this.style.color='#FFED4E'" onmouseout="this.style.color='#FFD700'">לחץ כאן</a></p>                    </div>
-                    <div class="contact-card">
-                        <h2>אימייל</h2>
-                        <h4 style="font-size: 30px;"> ליצירת קשר והצטרפות לציבור התורמים, הקלק כאן על כתובת הדאו"ל</h4>
-                        <p style="font-size: 32px; transform: scaleY(1.4) scaleX(0.8); color: #FFD700; cursor: pointer; transition: all 0.3s ease;"
-                            onclick="openEmail()"
-                            onmouseover="this.style.textShadow='0 0 15px rgba(255,224,102,0.8)'; this.style.transform='scaleY(1.4) scaleX(0.8) scale(1.05)'"
-                            onmouseout="this.style.textShadow='none'; this.style.transform='scaleY(1.4) scaleX(0.8)'">
-                            s0534142893@gmail.com
-                        </p>
-                        <h4 style="font-size: 25px;">ואנו נשתדל לשוב אליכם במהרה</h4>
-                    </div>
-                </div>
-            
-    <div class="opening-hours">
-    <p style="text-align: center; line-height: 0.9; font-size: 30px;">
-        האתר, התמונות, העיצוב והתוכן הופקו על ידי:
-        S.C. בניית אתרים
-        -053-414-28-93-
-    </p>
+        <div class="leader-card" style="flex-direction: row-reverse;">
+            <div class="leader-text">
+                <h3>לחידודי</h3>
+                <h4>מפעל לשינון והבנת דבר מתוך דבר</h4>
+                <p> מבחנים ייחודיים המעודדים חשיבה מעמיקה, פיתוח תובנות, והסקת מסקנות. כל מבחן שלנו הוא מסע של
+                    הבנה לא רק לדעת את התשובה, אלא להבין את הדרך אליה.</p>
+            </div>
+            <div class="leader-image">
+                <img src="https://i.postimg.cc/V60CZrBx/optimized.png" style="object-position: top center;" />
+            </div>
+        </div>
+        
+        <div class="leader-card">
+            <div class="leader-text">
+                <h3>חפץ חיים</h3>
+                <h4>מפעל להלכות לשון הרע בספר </h4>
+                <h4>"חפץ חיים"</h4>
+                <p>
+                    מפעל "חפץ חיים" פועל בישיבתנו כמסגרת מרוממת של חיזוק הדיבור ויראת שמיים, דווקא בשעות שבין
+                    הסדרים,
+                    בחורי הישיבה מתאספים בחברותות קבועות ללימוד הלכות שמירת הלשון מתוך הספר חפץ חיים,
+                    מעת לעת מתכבדת הישיבה באירוח רבנים חשובים, המעבירים שיעורים מוסריים ועיוניים בנושא, והורדת
+                    הדברים הלכה למעשה.
+                </p>
+            </div>
+            <div class="leader-image">
+                <img src="https://i.postimg.cc/Z51HbSsz/optimized.png" alt="חפץ חיים" style="object-position: top center;" />
+            </div>
+        </div>
+        
+        <div class="leader-card" style="flex-direction: row-reverse;">
+            <div class="leader-text">
+                <h3>סדר מוצאי שביעי</h3>
+                <h4>מפעל לחיזוק הלימוד במצאי שבת </h4>
+                <p>
+                    מדי מוצ"ש מתקיים סדר לימוד תוסס ומעמיק, מתוך רצינות, עיון וברוב עם ממש כמו בבית המדרש של
+                    אמצע השבוע. לאחר הלימוד, מוגשת סעודת מלכים, מושקעת ומוקפדת, כראוי לכבודה של תורה.
+                </p>
+            </div>
+            <div class="leader-image">
+                <img src="https://i.postimg.cc/FzWK0Q5Q/img-9444-optimized.jpg" alt="סדר-מוצאי-שבת" style="object-position: top center;" />
+            </div>
+        </div>
     </div>
-</div>
+
+    <div id="events-page" class="page events-page">
+        <div class="page-content">
+            <div class="title-box" style="margin-top: 25px;">
+                <h2>מראות הוד מביקורי מרנן ורבנן גדולי ומאורי הדור שליט"א</h2>
+            </div>
         </div>
+        
+        <div class="leader-card">
+            <div class="leader-text">
+                <h3>הגה"ג ר' דוד כהן שליט"א</h3>
+                <h4>ראש ישיבת חברון</h4>
+                <p>בערב ימי הרחמים והסליחות, כאשר הלבבות פתוחים לשינוי והתעלות, זכינו למעמד נשגב עם בואו של
+                    הגאון הגדול ר' דוד כהן שליט"א. דבריו חדרו ללבבות בעומק נדיר, והקרינו קדושה ורצינות שהעלו את
+                    רוח הבחורים לגבהים חדשים. ההתחזקות שניטעה הופכים את הביקור לזיכרון בל יימחה, אשר ישמש מצפן
+                    רוחני לבני הישבה לאורך כל השנה, ובמיוחד בימים הנשגבים שעמדו בפתח.</p>
+            </div>
+            <div class="leader-image">
+                <div style="display: flex; flex-direction: column; gap: 10px; height: 100%; justify-content: center; align-items: center;">
+                    <img src="https://i.postimg.cc/DzWS6FmM/optimized.jpg" alt="הרב דוד כהן שליט״א"
+                        style="width: 350px; height: 175px; object-fit: cover; border-radius: 5px; border: 5px solid white; box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);" />
+                    <img src="https://i.postimg.cc/rFmgT0H0/p1190138-optimized.jpg" alt="ביקור הרב דוד כהן בישיבה"
+                        style="width: 350px; height: 175px; object-fit: cover; border-radius: 5px; border: 5px solid white; box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);" />
+                </div>
+            </div>
+        </div>
+        
+        <div class="leader-card" style="flex-direction: row-reverse;">
+            <div class="leader-text">
+                <h3>הגה"ג ר' משה צדקה שליט"א</h3>
+                <h4>ראש ישיבת פורת יוסף</h4>
+                <p>במהלך ימי ההכנה לימים הנוראים, זכתה הישיבה לביקורו של אחד מגדולי הדור, מהמאורים הבולטים בעולם
+                    התורה, אשר מלווה את הישיבה לאורך השנים ביד נאמנה. מעורבותו והשגחתו על סדרי הנהגת הישיבה, כמו
+                    גם ההיוועצות הקבועה עמו בכל החלטה , מהוות יסוד איתן בדרכה החינוכית והרוחנית. ביקורו המרומם
+                    כלל דברי הדרכה, חיזוק והתעוררות, אשר הותירו רושם עז ועמוק בלב התלמידים וסגל הישיבה, ויהיו
+                    לנו למורת דרך גם להבא</p>
+            </div>
+            <div class="leader-image">
+                <div style="display: flex; flex-direction: column; gap: 10px; height: 100%; justify-content: center; align-items: center;">
+                    <img src="https://i.postimg.cc/15Yz7t2r/p1190783-optimized-optimized.jpg" alt="הרב משה צדקה שליט״א"
+                        style="width: 100%; max-width: 450px; height: 350px; object-fit: cover; border-radius: 5px; border: 5px solid white; box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);" />
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <script>
-            // הגנה מפני העתקה - חסימת לחיצה ימנית
-            document.addEventListener('contextmenu', function (e) {
-                e.preventDefault();
-                return false;
+    <div id="contact-page" class="page">
+        <div class="page-content">
+            <h1>מדור תרומות</h1>
+
+            <div class="opening-hours">
+                <p style="text-align: center; line-height: 1.2;">
+                    "כפי ריבוי הלומדים – כך גודל הצרכים ללומדים"<br>
+                    ב"ה, כותלי בית המדרש שוקקים בעמל התורה, והספסלים כבר כמעט אינם מספיקים.
+                    אבל עם ריבוי בני עליה, באים גם צרכי המקום.<br>
+                    זכות נדירה להשתתף בגידול הדור הבא של תלמידי חכמים.<br>
+                <h1>לתרומות נא לפנות באחת מהדרכים המפורטות כאן:</h1>
+                </p>
+            </div>
+
+            <div class="contact-info">
+                <div class="contact-card">
+                    <h2>כתובת</h2>
+                    <p>רחוב חזון איש 45<br>ירושלים, שכונת רמת שלמה. </p>
+                </div>
+                <div class="contact-card">
+                    <h2>קישור לתרומה מאובטחת</h2>
+                    <p><a href="https://www.jgive.com/new/he/ils/charity-organizations/8808" style="color: #FFD700; font-size: 50px; text-decoration: underline; font-weight: bold; transition: all 0.3s ease;" onmouseover="this.style.color='#FFED4E'" onmouseout="this.style.color='#FFD700'">לחץ כאן</a></p>
+                </div>
+                <div class="contact-card">
+                    <h2>אימייל</h2>
+                    <h4 style="font-size: 30px;"> ליצירת קשר והצטרפות לציבור התורמים, הקלק כאן על כתובת הדאו"ל</h4>
+                    <p style="font-size: 32px; transform: scaleY(1.4) scaleX(0.8); color: #FFD700; cursor: pointer; transition: all 0.3s ease;"
+                        onclick="openEmail()"
+                        onmouseover="this.style.textShadow='0 0 15px rgba(255,224,102,0.8)'; this.style.transform='scaleY(1.4) scaleX(0.8) scale(1.05)'"
+                        onmouseout="this.style.textShadow='none'; this.style.transform='scaleY(1.4) scaleX(0.8)'">
+                        s0534142893@gmail.com
+                    </p>
+                    <h4 style="font-size: 25px;">ואנו נשתדל לשוב אליכם במהרה</h4>
+                </div>
+            </div>
+        
+            <div class="opening-hours">
+                <p style="text-align: center; line-height: 0.9; font-size: 30px;">
+                    האתר, התמונות, העיצוב והתוכן הופקו על ידי:
+                    S.C. בניית אתרים
+                    -053-414-28-93-
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 🎯 אפקטים משופרים - טקסט ותמונות לפי כיוון הכרטיסיה
+        
+        function addTextSlideEffects() {
+            // הסרת classes קיימים
+            document.querySelectorAll('.leader-text, .project-text').forEach(element => {
+                element.classList.remove('text-slide-right', 'text-slide-left', 'text-visible');
             });
-
-            // חסימת מקשי קיצור דרך
-            document.addEventListener('keydown', function (e) {
-                // חסימת Ctrl+A (בחירת הכל)
-                if (e.ctrlKey && e.key === 'a') {
-                    e.preventDefault();
-                    return false;
-                }
-
-                // חסימת Ctrl+C (העתקה)
-                if (e.ctrlKey && e.key === 'c') {
-                    e.preventDefault();
-                    return false;
-                }
-
-                // חסימת Ctrl+V (הדבקה)
-                if (e.ctrlKey && e.key === 'v') {
-                    e.preventDefault();
-                    return false;
-                }
-
-                // חסימת F12 (Developer Tools)
-                if (e.key === 'F12') {
-                    e.preventDefault();
-                    return false;
-                }
-
-                // חסימת Ctrl+U (view source)
-                if (e.ctrlKey && e.key === 'u') {
-                    e.preventDefault();
-                    return false;
-                }
-
-                // חסימת Ctrl+Shift+I (Developer Tools)
-                if (e.ctrlKey && e.shiftKey && e.key === 'I') {
-                    e.preventDefault();
-                    return false;
-                }
-
-                // חסימת Ctrl+Shift+J (Console)
-                if (e.ctrlKey && e.shiftKey && e.key === 'J') {
-                    e.preventDefault();
-                    return false;
-                }
-
-                // חסימת Ctrl+Shift+C (Inspect Element)
-                if (e.ctrlKey && e.shiftKey && e.key === 'C') {
-                    e.preventDefault();
-                    return false;
-                }
-            });
-
-            // מניעת גרירת אלמנטים
-            document.addEventListener('dragstart', function (e) {
-                e.preventDefault();
-                return false;
-            });
-
-            // מניעת בחירת טקסט באמצעות JavaScript נוסף - אבל לא על שדה הסיסמה
-            document.onselectstart = function (e) {
-                if (e.target && e.target.id === 'password-input') {
-                    return true; // אפשר בחירה בשדה הסיסמה
-                }
-                return false;
-            };
-
-            document.onmousedown = function (e) {
-                if (e.target && e.target.id === 'password-input') {
-                    return true; // אפשר לחיצה על שדה הסיסמה
-                }
-                return false;
-            };
-
-            // העכבר ילך אוטומטית לשדה הסיסמה כשהעמוד נטען
-            window.addEventListener('load', function () {
-                const passwordInput = document.getElementById('password-input');
-                if (passwordInput) {
-                    passwordInput.focus(); // מעביר את הפוקוס לשדה הסיסמה
-                }
-                scrollToTop();
-            });
-
-            // חסימת Print Screen (עובד רק בחלק מהדפדפנים)
-            document.addEventListener('keyup', function (e) {
-                if (e.key === 'PrintScreen') {
-                    navigator.clipboard.writeText('');
-                }
-            });
-
-            // מניעת העתקה באמצעות clipboard API - אבל לא בשדה הסיסמה
-            document.addEventListener('copy', function (e) {
-                if (e.target && e.target.id === 'password-input') {
-                    return true; // אפשר העתקה בשדה הסיסמה
-                }
-                e.preventDefault();
-                return false;
-            });
-
-            // מניעת הדבקה - אבל לא בשדה הסיסמה
-            document.addEventListener('paste', function (e) {
-                if (e.target && e.target.id === 'password-input') {
-                    return true; // אפשר הדבקה בשדה הסיסמה
-                }
-                e.preventDefault();
-                return false;
-            });
-
-            function scrollToTop() {
-                window.scrollTo({
-                    top: 0,
-                    left: 0,
-                    behavior: 'instant'
-                });
-            }
-
-            function goToHomePage() {
-                document.querySelectorAll('.page').forEach(page => {
-                    page.classList.remove('active-page');
-                });
-
-                document.querySelectorAll('.nav-btn').forEach(btn => {
-                    btn.classList.remove('active');
-                });
-
-                document.getElementById('home-page').classList.add('active-page');
-                document.querySelector('.nav-btn').classList.add('active');
-
-                document.querySelectorAll('.riboim-wrapper div').forEach(div => {
-                    div.classList.remove('flipped');
-                });
-
-                scrollToTop();
-            }
-
-            function showPage(pageId) {
-                document.querySelectorAll('.page').forEach(page => {
-                    page.classList.remove('active-page');
-                });
-
-                document.querySelectorAll('.nav-btn').forEach(btn => {
-                    btn.classList.remove('active');
-                });
-
-                document.getElementById(pageId + '-page').classList.add('active-page');
-
-                if (event && event.target) {
-                    event.target.classList.add('active');
-                }
-
-                scrollToTop();
-            }
-
-            function navigateToEvents(element) {
-                navigateWithFlip(element, 'events-page', 3);
-            }
-
-            function navigateToTorah(element) {
-                navigateWithFlip(element, 'torah-page', -1);
-            }
-
-            function navigateToChavruta(element) {
-                navigateWithFlip(element, 'chavruta-page', -1);
-            }
-
-            function navigateWithFlip(element, pageId, navButtonIndex) {
-                element.classList.add('flipped');
-
-                setTimeout(function () {
-                    document.querySelectorAll('.page').forEach(page => {
-                        page.classList.remove('active-page');
-                    });
-
-                    document.querySelectorAll('.nav-btn').forEach(btn => {
-                        btn.classList.remove('active');
-                    });
-
-                    document.getElementById(pageId).classList.add('active-page');
-
-                    if (navButtonIndex >= 0) {
-                        const navBtn = document.querySelectorAll('.nav-btn')[navButtonIndex];
-                        if (navBtn) {
-                            navBtn.classList.add('active');
-                        }
-                    }
-
-                    scrollToTop();
-                }, 600);
-            }
-
-            window.addEventListener('load', function () {
-                const passwordInput = document.getElementById('password-input');
-                if (passwordInput) {
-                    passwordInput.focus(); // מעביר את הפוקוס לשדה הסיסמה
-                }
-                scrollToTop();
-            });
-
-            window.addEventListener('beforeunload', function () {
-                scrollToTop();
-            });
-
-            document.addEventListener('DOMContentLoaded', function () {
-                scrollToTop();
-            });
-
-            let startX = 0;
-            let startY = 0;
-            let endX = 0;
-            let endY = 0;
-
-            document.addEventListener('touchstart', function (e) {
-                startX = e.touches[0].clientX;
-                startY = e.touches[0].clientY;
-            });
-
-            document.addEventListener('touchend', function (e) {
-                endX = e.changedTouches[0].clientX;
-                endY = e.changedTouches[0].clientY;
-
-                const deltaX = endX - startX;
-                const deltaY = endY - startY;
-
-                if (Math.abs(deltaX) > Math.abs(deltaY) && deltaX > 100) {
-                    const currentPage = document.querySelector('.page.active-page').id;
-                    if (currentPage !== 'home-page') {
-                        goToHomePage();
+            
+            // הוספת classes לטקסט לפי מיקום האמיתי בכרטיסיה
+            document.querySelectorAll('.leader-text, .project-text').forEach((textElement) => {
+                const isHomePage = textElement.closest('#home-page');
+                if (!isHomePage) {
+                    const card = textElement.closest('.leader-card, .project-card');
+                    
+                    // בדיקה אם הכרטיסיה היא reverse
+                    if (card && card.style.flexDirection === 'row-reverse') {
+                        // בכרטיסיה הפוכה: הטקסט נמצא בצד ימין אז נכנס מימין
+                        textElement.classList.add('text-slide-right');
+                    } else {
+                        // בכרטיסיה רגילה: הטקסט נמצא בצד שמאל אז נכנס משמאל
+                        textElement.classList.add('text-slide-left');
                     }
                 }
             });
+        }
 
-            document.addEventListener('keydown', function (e) {
-                if (e.key === 'ArrowUp') {
-                    const currentPage = document.querySelector('.page.active-page').id;
-                    if (currentPage !== 'home-page') {
-                        goToHomePage();
-                        e.preventDefault();
+        function addImageSlideEffects() {
+            // הסרת classes קיימים
+            document.querySelectorAll('.leader-image, .project-image').forEach(element => {
+                element.classList.remove('image-slide-right', 'image-slide-left', 'image-visible');
+            });
+            
+            // הוספת classes לתמונות לפי מיקום האמיתי בכרטיסיה
+            document.querySelectorAll('.leader-image, .project-image').forEach((imageElement) => {
+                const isHomePage = imageElement.closest('#home-page');
+                if (!isHomePage) {
+                    const card = imageElement.closest('.leader-card, .project-card');
+                    
+                    // בדיקה אם הכרטיסיה היא reverse
+                    if (card && card.style.flexDirection === 'row-reverse') {
+                        // בכרטיסיה הפוכה: התמונה נמצאת בצד שמאל אז נכנסת משמאל
+                        imageElement.classList.add('image-slide-left');
+                    } else {
+                        // בכרטיסיה רגילה: התמונה נמצאת בצד ימין אז נכנסת מימין
+                        imageElement.classList.add('image-slide-right');
                     }
                 }
             });
+        }
 
-            function openEmail() {
-                const subject = 'תרומה לישיבת אהל תורה';
-                const body = 'שלום רב,\n\nאני רוצה לתרום לישיבת אהל תורה.\n\nתודה רבה';
-                const encodedSubject = encodeURIComponent(subject);
-                const encodedBody = encodeURIComponent(body);
-                window.location.href = `mailto:s0534142893@gmail.com?subject=${encodedSubject}&body=${encodedBody}`;
-            }
-
-            function checkPassword() {
-                const password = document.getElementById('password-input').value;
-                const correctPassword = 'SC5541'; // שנה את הסיסמה כאן
+        function checkTextScroll() {
+            const textElements = document.querySelectorAll('.text-slide-right, .text-slide-left');
+            
+            textElements.forEach(element => {
+                const rect = element.getBoundingClientRect();
+                const windowHeight = window.innerHeight;
                 
-                if (password === correctPassword )//TODO: prod - remove || password ==="" - no pasword for debug only 
-                 {
-                    document.getElementById('password-screen').style.display = 'none';
-                    document.getElementById('error-message').textContent = '';
+                if (rect.top < windowHeight - 100 && rect.bottom > 100) {
+                    element.classList.add('text-visible');
                 } else {
-                    document.getElementById('error-message').textContent = 'סיסמה שגויה! נסו שוב';
-                    document.getElementById('password-input').value = '';
-                }
-            }
-
-            document.getElementById('password-input').addEventListener('keypress', function (e) {
-                if (e.key === 'Enter') {
-                    checkPassword();
+                    element.classList.remove('text-visible');
                 }
             });
-        </script>
+        }
+
+        function checkImageScroll() {
+            const imageElements = document.querySelectorAll('.image-slide-right, .image-slide-left');
+            
+            imageElements.forEach(element => {
+                const rect = element.getBoundingClientRect();
+                const windowHeight = window.innerHeight;
+                
+                if (rect.top < windowHeight - 100 && rect.bottom > 100) {
+                    element.classList.add('image-visible');
+                } else {
+                    element.classList.remove('image-visible');
+                }
+            });
+        }
+
+        function refreshEffectsOnPageChange() {
+            setTimeout(() => {
+                addTextSlideEffects();
+                addImageSlideEffects();
+                checkTextScroll();
+                checkImageScroll();
+            }, 100);
+        }
+
+        function showPage(pageId) {
+            // הסתרת כל הדפים
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active-page');
+            });
+
+            // הסרת active מכל הכפתורים
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // הצגת הדף הנבחר
+            const targetPage = document.getElementById(pageId + '-page');
+            if (targetPage) {
+                targetPage.classList.add('active-page');
+            }
+
+            // הוספת active לכפתור הנכון
+            const navButtons = document.querySelectorAll('.nav-btn');
+            const pageMap = {
+                'about': 1,
+                'events': 2, 
+                'shiurim': 3,
+                'contact': 4
+            };
+            
+            if (pageMap[pageId] && navButtons[pageMap[pageId]]) {
+                navButtons[pageMap[pageId]].classList.add('active');
+            }
+
+            scrollToTop();
+            refreshEffectsOnPageChange();
+        }
+
+        function goToHomePage() {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active-page');
+            });
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            document.getElementById('home-page').classList.add('active-page');
+            document.querySelector('.nav-btn').classList.add('active');
+
+            // איפוס הריבועים
+            document.querySelectorAll('.riboim-wrapper div').forEach(div => {
+                div.classList.remove('flipped');
+            });
+
+            scrollToTop();
+            refreshEffectsOnPageChange();
+        }
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: 'instant'
+            });
+        }
+
+        function openEmail() {
+            const subject = 'תרומה לישיבת אהל תורה';
+            const body = 'שלום רב,\n\nאני רוצה לתרום לישיבת אהל תורה.\n\nתודה רבה';
+            const encodedSubject = encodeURIComponent(subject);
+            const encodedBody = encodeURIComponent(body);
+            window.location.href = `mailto:s0534142893@gmail.com?subject=${encodedSubject}&body=${encodedBody}`;
+        }
+
+        function checkPassword() {
+            const password = document.getElementById('password-input').value;
+            const correctPassword = 'SC5541';
+            
+            if (password === correctPassword) {
+                document.getElementById('password-screen').style.display = 'none';
+                document.getElementById('error-message').textContent = '';
+            } else {
+                document.getElementById('error-message').textContent = 'סיסמה שגויה! נסו שוב';
+                document.getElementById('password-input').value = '';
+            }
+        }
+
+        // הגנות אבטחה
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+            return false;
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.ctrlKey && e.key === 'a') {
+                e.preventDefault();
+                return false;
+            }
+            if (e.ctrlKey && e.key === 'c') {
+                e.preventDefault();
+                return false;
+            }
+            if (e.ctrlKey && e.key === 'v') {
+                e.preventDefault();
+                return false;
+            }
+            if (e.key === 'F12') {
+                e.preventDefault();
+                return false;
+            }
+            if (e.ctrlKey && e.key === 'u') {
+                e.preventDefault();
+                return false;
+            }
+            if (e.ctrlKey && e.shiftKey && e.key === 'I') {
+                e.preventDefault();
+                return false;
+            }
+            if (e.ctrlKey && e.shiftKey && e.key === 'J') {
+                e.preventDefault();
+                return false;
+            }
+            if (e.ctrlKey && e.shiftKey && e.key === 'C') {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        document.addEventListener('dragstart', function (e) {
+            e.preventDefault();
+            return false;
+        });
+
+        document.onselectstart = function (e) {
+            if (e.target && e.target.id === 'password-input') {
+                return true;
+            }
+            return false;
+        };
+
+        document.onmousedown = function (e) {
+            if (e.target && e.target.id === 'password-input') {
+                return true;
+            }
+            return false;
+        };
+
+        document.addEventListener('copy', function (e) {
+            if (e.target && e.target.id === 'password-input') {
+                return true;
+            }
+            e.preventDefault();
+            return false;
+        });
+
+        document.addEventListener('paste', function (e) {
+            if (e.target && e.target.id === 'password-input') {
+                return true;
+            }
+            e.preventDefault();
+            return false;
+        });
+
+        // הפעלת האפקטים
+        window.addEventListener('load', function() {
+            const passwordInput = document.getElementById('password-input');
+            if (passwordInput) {
+                passwordInput.addEventListener('keypress', function (e) {
+                    if (e.key === 'Enter') {
+                        checkPassword();
+                    }
+                });
+                passwordInput.focus();
+            }
+            
+            addTextSlideEffects();
+            addImageSlideEffects();
+            checkTextScroll();
+            checkImageScroll();
+            scrollToTop();
+        });
+
+        window.addEventListener('scroll', function() {
+            checkTextScroll();
+            checkImageScroll();
+        });
+
+        // מגע ומקלדת
+        let startX = 0;
+        let startY = 0;
+        let endX = 0;
+        let endY = 0;
+
+        document.addEventListener('touchstart', function (e) {
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
+        });
+
+        document.addEventListener('touchend', function (e) {
+            endX = e.changedTouches[0].clientX;
+            endY = e.changedTouches[0].clientY;
+
+            const deltaX = endX - startX;
+            const deltaY = endY - startY;
+
+            if (Math.abs(deltaX) > Math.abs(deltaY) && deltaX > 100) {
+                const currentPage = document.querySelector('.page.active-page').id;
+                if (currentPage !== 'home-page') {
+                    goToHomePage();
+                }
+            }
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'ArrowUp') {
+                const currentPage = document.querySelector('.page.active-page').id;
+                if (currentPage !== 'home-page') {
+                    goToHomePage();
+                    e.preventDefault();
+                }
+            }
+        });
+
+        window.addEventListener('beforeunload', function () {
+            scrollToTop();
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            scrollToTop();
+        });
+
+        document.addEventListener('keyup', function (e) {
+            if (e.key === 'PrintScreen') {
+                navigator.clipboard.writeText('');
+            }
+        });
+    </script>
 
 </body>
-
-</html>
