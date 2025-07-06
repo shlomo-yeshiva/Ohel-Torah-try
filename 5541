@@ -1459,7 +1459,7 @@ border: 17px solid #6E0000; text-align: center; box-shadow: 0 25px 50px rgba(0, 
 
         function checkPassword() {
             const password = document.getElementById('password-input').value;
-            const correctPassword = 'SC5541';
+            const correctPassword = '207075896';
             
             if (password === correctPassword) {
                 document.getElementById('password-screen').style.display = 'none';
