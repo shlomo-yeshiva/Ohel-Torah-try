@@ -6,7 +6,1632 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>אהל תורה</title>
 
+    <style><!DOCTYPE html>
+<html lang="he" dir="rtl">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>אהל תורה</title>
+
     <style>
+        /* 🎯 אפקטים משופרים - טקסט ותמונות לפי כיוון הכרטיסיה */
+        .text-slide-right {
+            opacity: 0;
+            transform: translateX(100px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .text-slide-left {
+            opacity: 0;
+            transform: translateX(-100px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .text-slide-right.text-visible,
+        .text-slide-left.text-visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* אפקטי תמונות משופרים */
+        .image-slide-right {
+            opacity: 0;
+            transform: translateX(120px) scale(0.85);
+            transition: all 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .image-slide-left {
+            opacity: 0;
+            transform: translateX(-120px) scale(0.85);
+            transition: all 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .image-slide-right.image-visible,
+        .image-slide-left.image-visible {
+            opacity: 1;
+            transform: translateX(0) scale(1);
+        }
+
+        /* אפקטים נוספים לטקסט */
+        .leader-text.text-visible h3,
+        .project-text.text-visible h3 {
+            animation: titlePop 0.6s ease 0.2s both;
+        }
+
+        .leader-text.text-visible h4,
+        .project-text.text-visible h4 {
+            animation: titlePop 0.6s ease 0.4s both;
+        }
+
+        .leader-text.text-visible p,
+        .project-text.text-visible p {
+            animation: titlePop 0.6s ease 0.6s both;
+        }
+
+        /* אפקטים נוספים לתמונות */
+        .leader-image.image-visible img,
+        .project-image.image-visible img {
+            animation: imageZoomRotate 0.8s ease 0.3s both;
+        }
+
+        @keyframes titlePop {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes imageZoomRotate {
+            0% { 
+                transform: scale(0.8) rotate(-3deg);
+                opacity: 0;
+            }
+            50% { 
+                transform: scale(1.02) rotate(1deg);
+            }
+            100% { 
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+        }
+
+        @font-face {
+            font-family: 'EFT_Atara';
+            src: url('EFT_Atara.woff') format('woff');
+        }
+
+        /* הגנה מפני העתקה - אבל לא על שדה הסיסמה */
+        *:not(#password-input) {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* אפשר בחירה בשדה הסיסמה */
+        #password-input {
+            -webkit-user-select: text !important;
+            -moz-user-select: text !important;
+            -ms-user-select: text !important;
+            user-select: text !important;
+        }
+
+        /* הגנה על תמונות */
+        img {
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -o-user-select: none;
+            user-select: none;
+            pointer-events: none;
+            -webkit-user-drag: none;
+            -khtml-user-drag: none;
+            -moz-user-drag: none;
+            -o-user-drag: none;
+            user-drag: none;
+            -ms-user-select: none;
+            -webkit-touch-callout: none;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Guttman Mantova', serif;
+            background-color: #6E0000;
+            overflow-x: hidden;
+            max-width: 100vw;
+            box-sizing: border-box;
+            touch-action: pan-y;
+            scroll-behavior: smooth;
+        }
+
+        .navigation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 25vh;
+            background-color: rgba(110, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+        }
+
+        #home-page {
+            padding-top: 0;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        body.home-active {
+            overflow: hidden;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 96%;
+            height: 100%;
+            padding: 0 2%;
+        }
+
+        .nav-btn {
+            background-color: #A8301F;
+            border: 1.5px solid white;
+            color: white;
+            padding: 10px 1px;
+            font-size: 35px; /* הקטנה מ-45px */
+            font-family: 'Guttman Mantova', serif;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            width: 19%;
+            height: 80%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            white-space: nowrap;
+            line-height: 0.8;
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 1.0), 0 6px 12px rgba(0, 0, 0, 0.9);
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .nav-btn:hover {
+            background-color: white;
+            color: #A8301F;
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.8);
+        }
+
+        .nav-btn.active {
+            background-color: white;
+            color: #A8301F;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.9);
+        }
+
+        .page {
+            display: none;
+            min-height: 100vh;
+            padding-top: 27vh;
+        }
+
+        .page.active-page {
+            display: block;
+        }
+
+        #home-page {
+            padding-top: 0;
+        }
+
+        .page-content {
+            max-width: 94%;
+            margin: 12px auto;
+            padding: 20px;
+            background-color: rgba(245, 230, 211, 0.95);
+            border-radius: 10px;
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 1.0), 0 6px 12px rgba(0, 0, 0, 0.9);
+        }
+
+        .page-content h1 {
+            color: #6E0000;
+            text-align: center;
+            font-size: 40px; /* הקטנה מ-75px */
+            margin-bottom: 15px;
+            font-weight: bold;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .page-content h2 {
+            color: #6E0000;
+            text-align: center;
+            font-size: 60px; /* הקטנה מ-75px */
+            margin-bottom: 15px;
+            font-weight: bold;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .page-content h3 {
+            color: #A8301F;
+            font-size: 40px; /* הקטנה מ-50px */
+            font-weight: bold;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .page-content p {
+            font-size: 32px; /* הקטנה מ-40px */
+            line-height: 1.6;
+            color: #2A1A10;
+            text-align: right;
+            font-weight: bold;
+        }
+
+        .info-grid,
+        .contact-info {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            margin: 20px auto;
+            padding: 0 40px;
+            gap: 40px;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            margin: 20px auto;
+            padding: 0 20px;
+            gap: 15px;
+        }
+
+        .info-card,
+        .contact-card {
+            background-color: #B8904A;
+            padding: 25px;
+            border-radius: 10px;
+            color: white;
+            text-align: center;
+            flex: 1;
+            height: 380px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 1.0), 0 6px 12px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            box-sizing: border-box;
+            flex-shrink: 0;
+            margin: 0;
+        }
+
+        .info-card h3,
+        .contact-card h3 {
+            font-size: 40px; /* הקטנה מ-50px */
+            margin-bottom: 10px;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .info-card h2,
+        .contact-card h2 {
+            font-size: 40px; /* הקטנה מ-50px */
+            margin-bottom: 10px;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .info-card p,
+        .contact-card p {
+            font-size: 28px; /* הקטנה מ-35px */
+            color: white;
+            text-align: center;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            line-height: 1.3;
+            margin: 5px 0;
+        }
+
+        .Quote-1 {
+            background-color: #B8904A;
+            padding: 25px;
+            border-radius: 10px;
+            color: white;
+            text-align: center;
+            width: 380px;
+            height: 380px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 1.0), 0 6px 12px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            box-sizing: border-box;
+            flex-shrink: 0;
+            margin: 0;
+        }
+
+        .contact-card h4 {
+            font-size: 20px; /* הקטנה מ-24px */
+            margin: 8px 0;
+            color: white;
+            line-height: 1.2;
+        }
+
+        .contact-card p[onclick] {
+            font-size: 24px !important; /* הקטנה מ-28px */
+            margin: 8px 0;
+        }
+
+        .schedule {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .day-schedule {
+            background-color: #A8301F;
+            padding: 20px;
+            border-radius: 10px;
+            color: white;
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 1.0), 0 6px 12px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .day-schedule h3 {
+            color: white;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 36px; /* הקטנה מ-45px */
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .day-schedule ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .day-schedule li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+            text-align: right;
+            font-size: 36px; /* הקטנה מ-45px */
+            font-weight: bold;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .opening-hours {
+            background-color: #B8904A;
+            padding: 20px;
+            border-radius: 10px;
+            color: white;
+            text-align: center;
+            margin-top: 20px;
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 1.0), 0 6px 12px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .opening-hours h1 {
+            font-size: 32px; /* הקטנה מ-50px */
+            margin-bottom: 10px;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .opening-hours h3 {
+            font-size: 32px; /* הקטנה מ-50px */
+            margin-bottom: 10px;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .opening-hours p {
+            font-size: 27px; /* הקטנה מ-40px */
+            color: white;
+            text-align: center;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .content-box {
+            background-color: #F0DCC9;
+            padding: 20px;
+            border-radius: 5px;
+            color: white;
+            text-align: right;
+            margin: 20px auto;
+            width: 95%;
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 1.0), 0 6px 12px rgba(0, 0, 0, 0.9);
+        }
+
+        .content-box p {
+            font-size: 25px; /* הקטנה מ-37px */
+            line-height: 1.0;
+            font-weight: bold;
+            font-family: 'Guttman Mantova', serif;
+            color: white;
+            margin: 10px 0;
+        }
+
+        .content-box p.title {
+            text-align: center;
+            font-size: 35px; /* הקטנה מ-70px */
+            color: #6E0000;
+            margin-bottom: 15px;
+            border-bottom: 1.5px solid #8B4513;
+            padding-bottom: 8px;
+            font-family: 'Miriam', sans-serif;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .title-box {
+            background-color: #6E0000;
+            padding: 15px;
+            border-radius: 10px;
+            color: white;
+            text-align: center;
+            margin: 20px auto;
+            max-width: 90%;
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 1.0), 0 6px 12px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .title-box h2 {
+            font-size: 50px; /* הקטנה מ-62px */
+            font-weight: bold;
+            margin: 0;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-section {
+            position: relative;
+            width: 100vw;
+            height: 123vh;
+            margin: 0;
+            margin-top: 20vh;
+            padding: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            box-sizing: border-box;
+            z-index: 1;
+        }
+
+        .hero-image {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            object-fit: cover;
+            object-position: center center;
+            z-index: 0;
+            animation: zoomInOut 10s cubic-bezier(0.23, 1, 0.32, 1) infinite;
+            border: none;
+            border-radius: 0;
+            box-sizing: border-box;
+        }
+
+        @keyframes zoomInOut {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.18);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .hero-title {
+            position: absolute;
+            top: 27%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 23vw;
+            font-family: 'EFT_Talpiot', serif;
+            background: linear-gradient(45deg, #FFD700, #FF8C00, #FF6347, #FFD700);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 1), 0 0 25px rgba(255, 140, 0, 0.9), 0 0 35px rgba(255, 99, 71, 0.7);
+            margin: 0;
+            z-index: 2;
+            font-weight: normal;
+            white-space: nowrap;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+        }
+
+        .hero-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(110, 0, 0, 0.4);
+            z-index: 1;
+        }
+
+        .cream-box-2 {
+            position: relative;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(184, 144, 74, 0.95);
+            border-radius: 20px 20px 20px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 5px 5px 5px 5px;
+            min-height: 450px;
+            z-index: 4;
+            box-sizing: border-box;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 1.0), 0 6px 12px rgba(0, 0, 0, 0.9);
+        }
+
+        .leadership-section {
+            width: 100%;
+            margin-top: 12px;
+        }
+
+        .leadership-title {
+            text-align: center;
+            font-size: 64px; /* הקטנה מ-80px */
+            font-weight: bold;
+            color: white;
+            margin-bottom: 20px;
+            margin-top: 5px;
+            text-shadow: 0 3px 6px rgba(0, 0, 0, 0.6);
+            font-family: 'Times New Roman', 'Georgia', 'Book Antiqua', serif;
+        }
+
+        .leader-card {
+            width: 97.5%;
+            max-width: none;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            background-color: #F0DCC9;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 0 auto 20px auto;
+            box-shadow: 0 18px 35px rgba(0, 0, 0, 0.9), 0 10px 18px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .project-card {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            background-color: #F0DCC9;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.7), 0 8px 15px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .project-image {
+            flex: 0 0 450px;
+            height: 450px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .project-image img {
+            width: 400px;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 0px;
+            border: 8px solid white;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 18px 35px rgba(0, 0, 0, 0.6);
+            mask: radial-gradient(circle at center, black 30%, rgba(0, 0, 0, 0.9) 40%, rgba(0, 0, 0, 0.8) 50%, rgba(0, 0, 0, 0.6) 60%, rgba(0, 0, 0, 0.4) 70%, rgba(0, 0, 0, 0.2) 80%, transparent 90%);
+            -webkit-mask: radial-gradient(circle at center, black 30%, rgba(0, 0, 0, 0.9) 40%, rgba(0, 0, 0, 0.8) 50%, rgba(0, 0, 0, 0.6) 60%, rgba(0, 0, 0, 0.4) 70%, rgba(0, 0, 0, 0.2) 80%, transparent 90%);
+        }
+
+        .project-text {
+            flex: 1;
+            text-align: center;
+            padding: 5px;
+            margin-top: -15px;
+        }
+
+        .project-text h3 {
+            font-size: 40px; /* הקטנה מ-50px */
+            color: white;
+            margin: 0 0 8px 0;
+            font-weight: bold;
+            font-family: 'Miriam', sans-serif;
+            position: relative;
+            background: linear-gradient(90deg, #B8904A, #D4A574, #A8301F);
+            padding: 10px 5px;
+            text-align: center;
+            border-radius: 5px;
+            box-shadow: 0 4px 12px rgba(184, 144, 74, 0.5);
+            width: 100%;
+            box-sizing: border-box;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .project-text h4 {
+            font-size: 36px; /* הקטנה מ-45px */
+            color: #A8301F;
+            margin: 0 0 10px 0;
+            font-weight: bold;
+            text-align: center;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .project-text p {
+            font-size: 20px; /* הקטנה מ-25px */
+            color: #2A1A10;
+            line-height: 1.5;
+            margin: 0;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .project-text p.short-info {
+            font-size: 28px; /* הקטנה מ-35px */
+            color: #2A1A10;
+            line-height: 1.5;
+            margin: 0;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        /* מיוחד לחלק "ותלמוד בידו" - נשאיר את הגדלים המקוריים */
+        .project-text h3:has(+ div[style*="background-image"]) {
+            font-size: 50px !important; /* נשאיר את הגודל המקורי */
+        }
+
+        .project-text div[style*="background-image"] h4 {
+            font-size: 45px !important; /* נשאיר את הגודל המקורי */
+        }
+
+        .project-text div[style*="background-image"] p {
+            font-size: 30px !important; /* נשאיר את הגודל המקורי */
+        }
+
+        .leader-text {
+            flex: 1;
+            text-align: center;
+            padding: 5px;
+            margin-top: -15px;
+        }
+
+        .leader-text h3 {
+            font-size: 40px; /* הקטנה מ-50px */
+            color: white;
+            margin: 0 0 8px 0;
+            font-weight: bold;
+            font-family: 'Miriam', sans-serif;
+            position: relative;
+            background: linear-gradient(90deg, #B8904A, #D4A574, #A8301F);
+            padding: 10px 5px;
+            text-align: center;
+            border-radius: 5px;
+            box-shadow: 0 4px 12px rgba(184, 144, 74, 0.5);
+            width: 100%;
+            box-sizing: border-box;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .leader-text h4 {
+            font-size: 36px; /* הקטנה מ-45px */
+            color: #A8301F;
+            margin: 0 0 10px 0;
+            font-weight: bold;
+            text-align: center;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .leader-text p {
+            font-size: 20px; /* הקטנה מ-25px */
+            color: #2A1A10;
+            line-height: 1.5;
+            margin: 0;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .leader-text p.short-info {
+            font-size: 28px; /* הקטנה מ-35px */
+            color: #2A1A10;
+            line-height: 1.5;
+            margin: 0;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .leader-image {
+            flex: 0 0 450px;
+            height: 450px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .leader-image img {
+            width: 400px;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 0px;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 18px 35px rgba(0, 0, 0, 0.6);
+            mask: radial-gradient(circle at center, black 30%, rgba(0, 0, 0, 0.9) 40%, rgba(0, 0, 0, 0.8) 50%, rgba(0, 0, 0, 0.6) 60%, rgba(0, 0, 0, 0.4) 70%, rgba(0, 0, 0, 0.2) 80%, transparent 90%);
+            -webkit-mask: radial-gradient(circle at center, black 30%, rgba(0, 0, 0, 0.9) 40%, rgba(0, 0, 0, 0.8) 50%, rgba(0, 0, 0, 0.6) 60%, rgba(0, 0, 0, 0.4) 70%, rgba(0, 0, 0, 0.2) 80%, transparent 90%);
+        }
+
+        .leader-image::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: transparent;
+            z-index: 1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .leader-image::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            z-index: 3;
+        }
+
+        .riboim-wrapper div {
+            width: 225px;
+            height: 225px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 44px; /* הקטנה מ-55px */
+            font-weight: bold;
+            color: white;
+            background-color: rgba(168, 48, 31, 0.95);
+            transition: all 0.3s ease;
+            text-align: center;
+            line-height: 0.9;
+            padding: 5px;
+            box-sizing: border-box;
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 1.0), 0 6px 12px rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .riboim-wrapper div {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .riboim-wrapper div:hover {
+            background-color: white;
+            color: #A8301F;
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.8);
+        }
+
+        .riboim-wrapper div.flipped {
+            background-color: white !important;
+            color: #A8301F !important;
+            transform: rotateY(180deg) scale(1.1);
+            animation: flipToWhite 0.6s ease-in-out;
+        }
+
+        @keyframes flipToWhite {
+            0% {
+                transform: rotateY(0deg) scale(1);
+                background-color: rgba(168, 48, 31, 0.95);
+                color: white;
+            }
+
+            50% {
+                transform: rotateY(90deg) scale(1.05);
+            }
+
+            100% {
+                transform: rotateY(180deg) scale(1.1);
+                background-color: white;
+                color: #A8301F;
+            }
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .event-card {
+            background-color: #B8904A;
+            padding: 20px;
+            border-radius: 10px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 1.0), 0 6px 12px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .event-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.9);
+        }
+
+        .event-card h3 {
+            font-size: 40px; /* הקטנה מ-50px */
+            margin-bottom: 10px;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .event-card .event-date {
+            font-size: 28px; /* הקטנה מ-35px */
+            color: #FFE066;
+            margin-bottom: 8px;
+            font-weight: bold;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .event-card p {
+            font-size: 32px; /* הקטנה מ-40px */
+            color: white;
+            text-align: center;
+            line-height: 1.4;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        /* התאמות מיוחדות לתמונות בדף האירועים */
+        .events-page .leader-image div {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .events-page .leader-image div img {
+            width: 350px;
+            height: 175px;
+            object-fit: cover;
+            border-radius: 5px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- מסך הסיסמה -->
+    <div id="password-screen" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+background: rgba(0, 0, 0, 0.5); display: flex;
+justify-content: center; align-items: center; z-index: 10000;">
+        <div style="background: rgba(245, 230, 211, 0.98); padding: 25px; border-radius: 20px;
+border: 17px solid #6E0000; text-align: center; box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6); width: 450px;">
+            <h2
+                style="color: #6E0000; font-size: 76px; margin-bottom: 10px; font-weight: bold; line-height: 0.3; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);">
+                אהל תורה</h2>
+            <p style="color: #2A1A10; font-size: 20px; margin-bottom: 20px;">אתר זה מוגן בסיסמה<br>אנא הזינו את הסיסמה
+                להמשך<br><span
+                    style="color: #A8301F; font-size: 16px; line-height: 1.3; font-weight: 900; display: block; margin-top: 5px;">כל
+                    העתקה, שכפול, הפצה או שימוש בתכנים או בקוד מתוך אתר זה אסורים על פי דין תורה ונחשבים לגזל ממש. שימוש
+                    כזה עלול להיחשב כהשגת גבול וגזל דעת.</span></p>
+            <input type="password" id="password-input" placeholder="סיסמה" style="width: 80%; padding: 15px; font-size: 20px; border: 3px solid #6E0000;
+       border-radius: 10px; text-align: center; margin-bottom: 15px; box-sizing: border-box;">
+            <br>
+            <button onclick="checkPassword()"
+                style="background: #6E0000; color: white; padding: 15px 30px;
+        font-size: 20px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);">
+                כניסה
+            </button>
+            <div id="error-message" style="color: #A8301F; font-size: 16px; margin-top: 8px; font-weight: bold;"></div>
+        </div>
+    </div>
+
+    <nav class="navigation">
+        <div class="nav-container">
+            <button class="nav-btn active" onclick="goToHomePage()">בית</button>
+            <button class="nav-btn" onclick="showPage('about')">אודות</button>
+            <button class="nav-btn" onclick="showPage('events')">אירועים</button>
+            <button class="nav-btn" onclick="showPage('shiurim')">מפעלים</button>
+            <button class="nav-btn" onclick="showPage('contact')">לתרומות</button>
+        </div>
+    </nav>
+
+    <div id="home-page" class="page active-page">
+        <div class="hero-section">
+            <h1 class="hero-title" id="mainTitle">אהל תורה</h1>
+            <img src="https://i.postimg.cc/4xX4LcNM/optimized-optimized-optimized.png" alt="תמונת רקע"
+                class="hero-image" />
+        </div>
+    </div>
+
+    <div id="about-page" class="page">
+        <div class="page-content">
+            <h2>אודות אהל תורה</h2>
+            <p>בהיכל הישיבה - שוקדים על תלמודם 350 לומדים העמלים בתורה תחת הנהגתם הרוחנית של מרנן ורבנן גדולי התורה
+                שליט"א, במטרה להצמיח את הדור הבא של בני התורה בארץ ובעולם כולו.</p>
+        </div>
+        <div class="info-grid">
+            <div class="Quote-1">
+                <p style="font-size: 48px; line-height: 1.1; font-weight: bold; font-family: 'Guttman Rashi', serif;">
+                    "המקום שמצמיח<br>דור יראים..."</p>
+            </div>
+            <div class="Quote-1">
+                <p style="font-size: 48px; line-height: 1.1; font-weight: bold; font-family: 'Guttman Rashi', serif;">
+                    "שהיראת שמיים<br>והרמה הלימודית<br>נפגשים..."</p>
+            </div>
+        </div>
+
+        <div class="content-box">
+            <p class="title">מספרם של בני הישיבה</p>
+            <p style="color: #722F37;">בני הישיבה נמנים על סך 350 בחורים השוקדים על תלמודם בהתמדה נוראה.</p>
+            <p style="color: #722F37;"> רבני הישיבה דואגים למזג את השילוב בין מספרם הרב של בני הישיבה לבין הבנייה האישית
+                וצמיחתו בתורה וביראת שמיים טהורה של כל בחור ובחור בפני עצמו.</p>
+            <p style="color: #722F37;"> אשר על כן רבני הישיבה דואגים לחלוקה של השיעורים כדלהלן:</p>
+            <p style="color: #722F37;">שיעור א' - 109 בחורים</p>
+            <p style="color: #722F37;">שיעור ב' - 96 בחורים</p>
+            <p style="color: #722F37;">שיעור ג' - 91 בחורים</p>
+            <p style="color: #722F37;">קיבוץ - 68 בחורים</p>
+            <p style="color: #722F37;">מכיון שרבני הישיבה דואגים שכל בחור יקבל יחס אישי על אף המספר הרב של בני השיעור.
+            </p>
+            <p style="color: #722F37;">לפיכך השיעורים שיש בתוכם מספר רב של לומדים מחולקים לשני מגידי שיעורים שונים.</p>
+
+            <div class="leadership-section">
+                <p style="color: #722F37; border-bottom: 8px double #A8301F; padding-bottom: 30px;">
+                <p class="title">פרטים על רבני הישיבה שליט"א</p>
+                <p style="color: #722F37;">בישיבתנו ישנם כמה סוגי מגידי שיעורים, כל אחד עם רקע וסגנון לימוד שונה. חלקם
+                    גדלו בישיבות שונות, מה שהביא עימם דרך לימוד שונה זו מזו. המגוון הזה משקף את רצון הישיבה להכשיר את
+                    הבחורים להיות 'כלי קיבול' רחב לכל סגננות הלימוד, ובכך לפתח את האישיות והעמקה הלימודית של כל אחד
+                    ואחד, המטרה בזה היא שבני הישיבה יצאו בנויים מישיבתנו מבחינה לימודית מכל הסגנונות.</p>
+                <p style="color: #722F37;">מכיון שצוות הישיבה דואג שכל בחור יקבל יחס אישי על אף המספר הרב של בני השיעור,
+                    לפיכך השיעורים שיש בתוכם מספר רב של בחורים מחולקים לשני מגידי שיעורים שונים.</p>
+                <p style="color: #722F37;">ובפרט שיעור א' שחשוב מאוד לרבני הישיבה שיקבלו את היחס החם ואת הבנייה הנצרכת
+                    לכל בחור ובחור.</p>
+            </div>
+        </div>
+
+        <div class="leader-card" style="position: relative; top: 0; margin-top: 20px;">
+            <div class="leader-text">
+                <h3>נשיא הישיבה שליט"א</h3>
+                <h4>הרה"ג ר' שלמה קצין שליט"א</h4>
+                <p class="short-info">בוגר ישיבת נר ישראל.</p>
+                <p class="short-info">יו"ר המפעל האדיר "מדרש ספרדי".</p>
+             <p> נושא באחריותו ללוות את מוסדות הישיבה בדרכו התורנית .
+             בתמיכתו האיתנה לאורך השנים, מהווה משען רוחני ומעשי, ועומד לימין ההנהלה בענייני הנהגה כללית והכוונה.
+             מעת לעת מוסר שיחות חיזוק נעלות, בהן מעורר את לב הבחורים ליראת שמיים, לעמל בתורה ולהתמדה בשקידה.
+            בהופעותיו מקרין רצינות, אהבה למסורת הישיבתית ותחושת שליחות המהדהדת בקרב תלמידי הישיבה וצוותה הרוחני.
+            </p>
+            </div>
+            <div class="leader-image">
+                <img src="https://i.postimg.cc/RZRPBrJp/optimized-optimized.jpg" alt="הרב שלמה קציין שליט" א" />
+            </div>
+        </div>
+        
+        <div class="leader-card" style="position: relative; top: 0; margin-top: 20px; flex-direction: row-reverse;">
+            <div class="leader-text">
+                <h3>ראש הישיבה שליט"א</h3>
+                <h4>הרה"ג ר' שמעון מעולם שליט"א</h4>
+                <p class="short-info">בוגר ישיבת רינת התורה</p>
+                <p class="short-info">מכהן אף כר"מ לבני שיעור ג'</p>
+            <p>מנהיג את הישיבה ברמה ובאחריות מתוך מסירות נפש והשקעה מתמדת בכל פרט ופרט.
+             בשיעוריו הכלליים, הנמסרים בהעמקה נדירה ובהירות מופלאה, מתווה דרך ישרה בלימוד העיון, ומעניק לבחורים כלים לרכישת הבנה עצמאית והשקפה אמיתית.
+             שיחות החיזוק הנאמרות מפיו מתקבלות ברטט ובערגה, ויוצרות חיבור פנימי בין התלמידים לעולמה של תורה ויראה.
+             אישיותו האצילית, קרבתו לתלמידים ודבריו החודרים ללב – הם יסוד ההשראה שמלווה את חיי הישיבה יום יום.
+             </p>
+            </div>
+            <div class="leader-image">
+                <img src="https://i.postimg.cc/50Zg3bDy/optimized-optimized.jpg" alt="הרב שמעון מעולם שליט" />
+            </div>
+        </div>
+        
+        <div class="leader-card">
+            <div class="leader-text">
+                <h3>משגיח הרוחני בישיבה</h3>
+                <h4>הרה"ג ר' יעקב כהן שליט"א</h4>
+                <p class="short-info">חתנא דבי נשיאה לחכם שלום הכהן זצוק"ל.</p>
+                <p class="short-info">בוגר ישיבת קול יעקב</p>
+                <p>ידוע כאיש מוסר וחינוך, המשלב רגישות מופלאה עם דעת אמונה ומחשבה. שיחותיו ווועדיו מאירים עיניים
+                    ומחוללים שינוי פנימי בלב הבחורים, בגדלותו החינוכית מדריך חתנים מבני הישיבה, ונותן בידם כלים לבניין
+                    בית נאמן בישראל מתוך יראת שמיים, אחריות ועומק השקפה.</p>
+            </div>
+            <div class="leader-image">
+                <img src="https://i.postimg.cc/NFq8Xbrr/optimized-optimized.jpg" alt="הרב יעקב כהן שליט״א" />
+            </div>
+        </div>
+
+        <div class="leader-card" style="position: relative; top: 0; margin-top: 20px; flex-direction: row-reverse;">
+            <div class="leader-text">
+                <h3>ראש קיבוץ</h3>
+                <h4>הרה"ג ר' דוד שריקי שליט"א</h4>
+                <p class="short-info">בוגר ישיבת עטרת ישראל</p>
+                <p>ידוע בעמקות עיונו ובבהירות סגנונו. שיעוריו מבררים את הסוגיות על מכונן, מתוך שקדנות והתמדה, ומתוך
+                    נאמנות לשיטת הראשונים והאחרונים. דרכו בלימוד מחנכת את תלמידיו לעמל התורה, לדיוק בלשון הראשונים,
+                    ולבניית יסודות איתנים בהבנת הסוגיה. גישתו משלבת חריפות דעת עם סבלנות והנחיה, עד שהתלמידים זוכים
+                    לקנות קניין בלימוד ולהעלות חידושים מדעתם.</p>
+            </div>
+            <div class="leader-image">
+                <img src="https://i.postimg.cc/yYKXYQHM/optimized-optimized.jpg" alt="הרב דוד שריקי שליט״א" />
+            </div>
+        </div>
+
+        <div class="leader-card">
+            <div class="leader-text">
+                <h3>ראש בקיאות</h3>
+                <h4>הרה"ג ר' שאול יצחקי שליט"א</h4>
+                <p class="short-info">בוגר ישיבת קול יעקב</p>
+                <p>העומד בראש מערך הבקיאות בישיבה, עוסק במסירות נדירה בהנחלת קניין אמיתי במסכת הנלמדת. מתוך גישה של
+                    בהירות בסוגיות, הוא מדריך את תלמידיו להשיג שליטה רחבה ורצף הבנה בכל סוגיה ופרק. לצד זאת, מרבה הרב
+                    לשוחח עם הבחורים באופן אישי, מכוון, מעודד, ופותח בפניהם שער לעמל התורה מתוך שמחה וחיבור פנימי.</p>
+            </div>
+            <div class="leader-image">
+                <img src="https://i.postimg.cc/Gm7kKbyR/optimized-optimized.jpg" alt="הרב שאול יצחקי שליט״א" />
+            </div>
+        </div>
+
+        <div class="leader-card" style="position: relative; top: 0; margin-top: 20px; flex-direction: row-reverse;">
+            <div class="leader-text">
+                <h3>ר"מ לבני שיעור ב'</h3>
+                <h4>הרה"ג ר' בנימין כהן שליט"א</h4>
+                <p class="short-info">בוגר ישיבת בית שמעיה.</p>
+                <p>מעמיק חקר בדרכה של תורה, נודע בכשרונו לחדד ולהאיר את יסוד מחלוקות הראשונים, תוך עיון דק ועקיב המתבונן
+                    לא רק בפשט אלא גם ביסוד שיטתי העומד מאחורי דבריהם. שיעוריו משמשים קרקע פוריה לליבון הסוגיה מתוך עמל,
+                    יגיעה והשוואת מקורות. דמותו הרוחנית בישיבה מקרינה יראת שמיים, ענווה אמיתית, כאשר הוא מדריך את בני
+                    הישיבה לשיטה של בירור הסוגיות, דיוק והבנה עמוקה.</p>
+            </div>
+            <div class="leader-image">
+                <img src="https://i.postimg.cc/TwmgTmH2/optimized-optimized.jpg" alt="הרב בנימין כהן שליט״א" />
+            </div>
+        </div>
+
+        <div class="leader-card">
+            <div class="leader-text">
+                <h3>ר"מ לבני שיעור א'</h3>
+                <h4>הרה"ג ר' מנחם כהן שליט"א</h4>
+                <p class="short-info">בוגר ישיבת חברון</p>
+                <p>מפורסם ביכולתו לדייק בלשנות הראשונים, ולבנות תלי תלים של סברות מתוך דקדוק. שיטתו העיונית נובעת מהבנה
+                    שיסודם של מחלוקות רבות נעוץ בניסוחם המדויק, ומתוך העדר או שינוי מילה עולה בירור עמוק וחשיפת שורש
+                    המחלוקת. גישתו מחנכת לגדלות האדם בלימוד התורה.</p>
+            </div>
+            <div class="leader-image">
+                <img src="https://i.postimg.cc/PJjZJxBW/optimized-optimized.jpg" alt="הרב מנחם כהן שליט״א" />
+            </div>
+        </div>
+
+        <div class="leader-card" style="position: relative; top: 0; margin-top: 20px; flex-direction: row-reverse;">
+            <div class="leader-text">
+                <h3>ר"מ לבני שיעור א'</h3>
+                <h4>הרה"ג ר' אריאל חיון שליט"א</h4>
+                <p class="short-info">בוגר ישיבת ???? משה</p>
+                <p class="short-info">נכד לחכם שלום הכהן זצוק"ל.</p>
+                <p>ונודע בשיעוריו שנמסרים בעמקות ובבהירות, מתוך עמל ויגיעה בלימוד. במסירות למלאכת הקודש, ותביעתו המתמדת
+                    מהתלמידים לשקוד על תלמודם מתוך אחריות וחתירה לגדולות. כאשר כל תלמיד זוכה לדחיפה מתמדת להתקדמות.</p>
+            </div>
+            <div class="leader-image">
+                <img src="https://i.postimg.cc/QdYKGmzw/optimized-optimized.jpg" alt="הרב אריאל חיון שליט״א" />
+            </div>
+        </div>
+    </div>
+
+    <div id="shiurim-page" class="page">
+        <div class="page-content">
+            <div class="title-box" style="margin-top: 25px;">
+                <h2>מפעלי קודש המתקימים בין כותלי </h2>
+                <h2>בית המדרש</h2>
+            </div>
+        </div>
+        
+        <div class="project-card leader-card">
+            <div class="project-text leader-text">
+                <h3>ותלמוד בידו</h3>
+                <div style="background-image: url('https://i.postimg.cc/tRWGPgtM/optimized.png'); background-size: 100% 100%; background-position: center 15%; background-repeat: no-repeat; position: relative; padding: 5px; border-radius: 15px; overflow: hidden; mask: radial-gradient(ellipse at center, black 40%, rgba(0,0,0,0.9) 60%, rgba(0,0,0,0.7) 70%, rgba(0,0,0,0.5) 80%, rgba(0,0,0,0.3) 90%, transparent 100%); -webkit-mask: radial-gradient(ellipse at center, black 40%, rgba(0,0,0,0.9) 60%, rgba(0,0,0,0.7) 70%, rgba(0,0,0,0.5) 80%, rgba(0,0,0,0.3) 90%, transparent 100%);">
+                    <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(240, 220, 201, 0.75);"></div>
+                    <div style="position: relative; z-index: 2;">
+                        <h4>מפעל לשינון וחזרה על החומר הנלמד בין כותלי הישיבה</h4>
+                        <div style="padding: 10px; margin: 8px 0;">
+                            <p style="color: #2C1810; padding: 8px; text-shadow: none; font-size: 30px; line-height: 1.4;">
+                                הבחורים זוכים לשליטה מוחלטת בחומר הנלמד תוך פיתוח ביטחון זכרון ויכולת ניתוח
+                                מעמיקה. במבחן זה שמתקיים בסוף זמן בני הישיבה זוכים לקנות ידע עצום במסכת הנלמדת
+                                ע"י החזרה למבחן זה.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="project-image leader-image">
+                <img src="https://i.postimg.cc/qR9tF7zF/img-0790-optimized.jpg" alt="ותלמוד בידו" />
+            </div>
+        </div>
+
+        <div class="leader-card" style="flex-direction: row-reverse;">
+            <div class="leader-text">
+                <h3>לחידודי</h3>
+                <h4>מפעל לשינון והבנת דבר מתוך דבר</h4>
+                <p> מבחנים ייחודיים המעודדים חשיבה מעמיקה, פיתוח תובנות, והסקת מסקנות. כל מבחן שלנו הוא מסע של
+                    הבנה לא רק לדעת את התשובה, אלא להבין את הדרך אליה.</p>
+            </div>
+            <div class="leader-image">
+                <img src="https://i.postimg.cc/V60CZrBx/optimized.png" style="object-position: top center;" />
+            </div>
+        </div>
+        
+        <div class="leader-card">
+            <div class="leader-text">
+                <h3>חפץ חיים</h3>
+                <h4>מפעל להלכות לשון הרע בספר </h4>
+                <h4>"חפץ חיים"</h4>
+                <p>
+                    מפעל "חפץ חיים" פועל בישיבתנו כמסגרת מרוממת של חיזוק הדיבור ויראת שמיים, דווקא בשעות שבין
+                    הסדרים,
+                    בחורי הישיבה מתאספים בחברותות קבועות ללימוד הלכות שמירת הלשון מתוך הספר חפץ חיים,
+                    מעת לעת מתכבדת הישיבה באירוח רבנים חשובים, המעבירים שיעורים מוסריים ועיוניים בנושא, והורדת
+                    הדברים הלכה למעשה.
+                </p>
+            </div>
+            <div class="leader-image">
+                <img src="https://i.postimg.cc/Z51HbSsz/optimized.png" alt="חפץ חיים" style="object-position: top center;" />
+            </div>
+        </div>
+        
+        <div class="leader-card" style="flex-direction: row-reverse;">
+            <div class="leader-text">
+                <h3>סדר מוצאי שביעי</h3>
+                <h4>מפעל לחיזוק הלימוד במצאי שבת </h4>
+                <p>
+                    מדי מוצ"ש מתקיים סדר לימוד תוסס ומעמיק, מתוך רצינות, עיון וברוב עם ממש כמו בבית המדרש של
+                    אמצע השבוע. לאחר הלימוד, מוגשת סעודת מלכים, מושקעת ומוקפדת, כראוי לכבודה של תורה.
+                </p>
+            </div>
+            <div class="leader-image">
+                <img src="https://i.postimg.cc/FzWK0Q5Q/img-9444-optimized.jpg" alt="סדר-מוצאי-שבת" style="object-position: top center;" />
+            </div>
+        </div>
+    </div>
+
+    <div id="events-page" class="page events-page">
+        <div class="page-content">
+            <div class="title-box" style="margin-top: 25px;">
+                <h2>מראות הוד מביקורי מרנן ורבנן גדולי ומאורי הדור שליט"א</h2>
+            </div>
+        </div>
+        
+        <div class="leader-card">
+            <div class="leader-text">
+                <h3>הגה"ג ר' דוד כהן שליט"א</h3>
+                <h4>ראש ישיבת חברון</h4>
+                <p>בערב ימי הרחמים והסליחות, זכינו למעמד נשגב עם בואו של
+                    הגאון הגדול ר' דוד כהן שליט"א. דבריו חדרו ללבבות בעומק נדיר, והקרינו קדושה ורצינות שהעלו את
+                    רוח הבחורים לגבהים חדשים. ההתחזקות שניטעה הופכים את הביקור לזיכרון בל יימחה, אשר ישמש מצפן
+                    רוחני לבני הישבה לאורך כל השנה, ובמיוחד בימים הנשגבים שעמדו בפתח.</p>
+            </div>
+            <div class="leader-image">
+                <div style="display: flex; flex-direction: column; gap: 10px; height: 100%; justify-content: center; align-items: center;">
+                    <img src="https://i.postimg.cc/DzWS6FmM/optimized.jpg" alt="הרב דוד כהן שליט״א"
+                        style="width: 350px; height: 175px; object-fit: cover; border-radius: 5px; box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);" />
+                    <img src="https://i.postimg.cc/rFmgT0H0/p1190138-optimized.jpg" alt="ביקור הרב דוד כהן בישיבה"
+                        style="width: 350px; height: 175px; object-fit: cover; border-radius: 5px; box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);" />
+                </div>
+            </div>
+        </div>
+        
+        <div class="leader-card" style="flex-direction: row-reverse;">
+            <div class="leader-text">
+                <h3>הגה"ג ר' משה צדקה שליט"א</h3>
+                <h4>ראש ישיבת פורת יוסף</h4>
+                <p>במהלך ימי ההכנה לימים הנוראים, זכתה הישיבה לביקורו של אחד מגדולי הדור, מהמאורים הבולטים בעולם
+                    התורה, אשר מלווה את הישיבה לאורך השנים ביד נאמנה. מעורבותו והשגחתו על סדרי הנהגת הישיבה, כמו
+                    גם ההיוועצות הקבועה עמו בכל החלטה, מהוות יסוד איתן בדרכה החינוכית והרוחנית. ביקורו המרומם
+                    כלל דברי הדרכה, חיזוק והתעוררות, אשר הותירו רושם עז ועמוק בלב התלמידים וסגל הישיבה, ויהיו
+                    לנו למורת דרך גם להבא</p>
+            </div>
+            <div class="leader-image">
+                <div style="display: flex; flex-direction: column; gap: 10px; height: 100%; justify-content: center; align-items: center;">
+                    <img src="https://i.postimg.cc/15Yz7t2r/p1190783-optimized-optimized.jpg" alt="הרב משה צדקה שליט״א"
+                        style="width: 100%; max-width: 450px; height: 350px; object-fit: cover; border-radius: 5px;  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="contact-page" class="page">
+        <div class="page-content">
+            <h1>מדור תרומות</h1>
+
+            <div class="opening-hours">
+                <p style="text-align: center; line-height: 1.2;">
+                    "כפי ריבוי הלומדים – כך גודל הצרכים ללומדים"<br>
+                    ב"ה, כותלי בית המדרש שוקקים בעמל התורה, והספסלים כבר כמעט אינם מספיקים.
+                    אבל עם ריבוי בני עליה, באים גם צרכי המקום.<br>
+                    זכות נדירה להשתתף בגידול הדור הבא של תלמידי חכמים.<br>
+                <h1>לתרומות נא לפנות באחת מהדרכים המפורטות כאן:</h1>
+                </p>
+            </div>
+
+            <div class="contact-info">
+                <div class="contact-card">
+                    <h2>כתובת הישיבה</h2>
+                    <p>רחוב חזון איש 45<br>ירושלים, שכונת רמת שלמה. </p>
+                </div>
+                <div class="contact-card">
+                    <h2>לתרומה מאובטחת</h2>
+                    <p><a href="https://www.jgive.com/new/he/ils/charity-organizations/8808" style="color: #FFD700; font-size: 40px; text-decoration: underline; font-weight: bold; transition: all 0.3s ease;" onmouseover="this.style.color='#FFED4E'" onmouseout="this.style.color='#FFD700'">לחץ כאן</a></p>
+                </div>
+                <div class="contact-card">
+                    <h2>אימייל</h2>
+                    <h4 style="font-size: 24px;"> ליצירת קשר והצטרפות לציבור התורמים, הקלק כאן על כתובת הדאו"ל</h4>
+                    <p style="font-size: 26px; transform: scaleY(1.4) scaleX(0.8); color: #FFD700; cursor: pointer; transition: all 0.3s ease;"
+                        onclick="openEmail()"
+                        onmouseover="this.style.textShadow='0 0 15px rgba(255,224,102,0.8)'; this.style.transform='scaleY(1.4) scaleX(0.8) scale(1.05)'"
+                        onmouseout="this.style.textShadow='none'; this.style.transform='scaleY(1.4) scaleX(0.8)'">
+                        s0534142893@gmail.com
+                    </p>
+                    <h4 style="font-size: 20px;">ואנו נשתדל לשוב אליכם במהרה</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 🎯 אפקטים משופרים - טקסט ותמונות לפי כיוון הכרטיסיה
+        
+        function addTextSlideEffects() {
+            // הסרת classes קיימים
+            document.querySelectorAll('.leader-text, .project-text').forEach(element => {
+                element.classList.remove('text-slide-right', 'text-slide-left', 'text-visible');
+            });
+            
+            // הוספת classes לטקסט לפי מיקום האמיתי בכרטיסיה
+            document.querySelectorAll('.leader-text, .project-text').forEach((textElement) => {
+                const isHomePage = textElement.closest('#home-page');
+                if (!isHomePage) {
+                    const card = textElement.closest('.leader-card, .project-card');
+                    
+                    // בדיקה אם הכרטיסיה היא reverse
+                    if (card && card.style.flexDirection === 'row-reverse') {
+                        // בכרטיסיה הפוכה: הטקסט נמצא בצד ימין אז נכנס מימין
+                        textElement.classList.add('text-slide-right');
+                    } else {
+                        // בכרטיסיה רגילה: הטקסט נמצא בצד שמאל אז נכנס משמאל
+                        textElement.classList.add('text-slide-left');
+                    }
+                }
+            });
+        }
+
+        function addImageSlideEffects() {
+            // הסרת classes קיימים
+            document.querySelectorAll('.leader-image, .project-image').forEach(element => {
+                element.classList.remove('image-slide-right', 'image-slide-left', 'image-visible');
+            });
+            
+            // הוספת classes לתמונות לפי מיקום האמיתי בכרטיסיה
+            document.querySelectorAll('.leader-image, .project-image').forEach((imageElement) => {
+                const isHomePage = imageElement.closest('#home-page');
+                if (!isHomePage) {
+                    const card = imageElement.closest('.leader-card, .project-card');
+                    
+                    // בדיקה אם הכרטיסיה היא reverse
+                    if (card && card.style.flexDirection === 'row-reverse') {
+                        // בכרטיסיה הפוכה: התמונה נמצאת בצד שמאל אז נכנסת משמאל
+                        imageElement.classList.add('image-slide-left');
+                    } else {
+                        // בכרטיסיה רגילה: התמונה נמצאת בצד ימין אז נכנסת מימין
+                        imageElement.classList.add('image-slide-right');
+                    }
+                }
+            });
+        }
+
+        function checkTextScroll() {
+            const textElements = document.querySelectorAll('.text-slide-right, .text-slide-left');
+            
+            textElements.forEach(element => {
+                const rect = element.getBoundingClientRect();
+                const windowHeight = window.innerHeight;
+                
+                if (rect.top < windowHeight - 100 && rect.bottom > 100) {
+                    element.classList.add('text-visible');
+                } else {
+                    element.classList.remove('text-visible');
+                }
+            });
+        }
+
+        function checkImageScroll() {
+            const imageElements = document.querySelectorAll('.image-slide-right, .image-slide-left');
+            
+            imageElements.forEach(element => {
+                const rect = element.getBoundingClientRect();
+                const windowHeight = window.innerHeight;
+                
+                if (rect.top < windowHeight - 100 && rect.bottom > 100) {
+                    element.classList.add('image-visible');
+                } else {
+                    element.classList.remove('image-visible');
+                }
+            });
+        }
+
+        function refreshEffectsOnPageChange() {
+            setTimeout(() => {
+                addTextSlideEffects();
+                addImageSlideEffects();
+                checkTextScroll();
+                checkImageScroll();
+            }, 100);
+        }
+
+        function showPage(pageId) {
+            // הסתרת כל הדפים
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active-page');
+            });
+
+            // הסרת active מכל הכפתורים
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // הצגת הדף הנבחר
+            const targetPage = document.getElementById(pageId + '-page');
+            if (targetPage) {
+                targetPage.classList.add('active-page');
+            }
+
+            // הוספת active לכפתור הנכון
+            const navButtons = document.querySelectorAll('.nav-btn');
+            const pageMap = {
+                'about': 1,
+                'events': 2, 
+                'shiurim': 3,
+                'contact': 4
+            };
+            
+            if (pageMap[pageId] && navButtons[pageMap[pageId]]) {
+                navButtons[pageMap[pageId]].classList.add('active');
+            }
+
+            scrollToTop();
+            refreshEffectsOnPageChange();
+        }
+
+        function goToHomePage() {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active-page');
+            });
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            document.getElementById('home-page').classList.add('active-page');
+            document.querySelector('.nav-btn').classList.add('active');
+
+            // איפוס הריבועים
+            document.querySelectorAll('.riboim-wrapper div').forEach(div => {
+                div.classList.remove('flipped');
+            });
+
+            scrollToTop();
+            refreshEffectsOnPageChange();
+        }
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: 'instant'
+            });
+        }
+
+        function openEmail() {
+            const subject = 'תרומה לישיבת אהל תורה';
+            const body = 'שלום רב,\n\nאני רוצה לתרום לישיבת אהל תורה.\n\nתודה רבה';
+            const encodedSubject = encodeURIComponent(subject);
+            const encodedBody = encodeURIComponent(body);
+            window.location.href = `mailto:s0534142893@gmail.com?subject=${encodedSubject}&body=${encodedBody}`;
+        }
+
+        function checkPassword() {
+            const password = document.getElementById('password-input').value;
+            const correctPassword = '207075896';
+            
+            if (password === correctPassword) {
+                document.getElementById('password-screen').style.display = 'none';
+                document.getElementById('error-message').textContent = '';
+            } else {
+                document.getElementById('error-message').textContent = 'סיסמה שגויה! נסו שוב';
+                document.getElementById('password-input').value = '';
+            }
+        }
+
+        // הגנות אבטחה
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+            return false;
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.ctrlKey && e.key === 'a') {
+                e.preventDefault();
+                return false;
+            }
+            if (e.ctrlKey && e.key === 'c') {
+                e.preventDefault();
+                return false;
+            }
+            if (e.ctrlKey && e.key === 'v') {
+                e.preventDefault();
+                return false;
+            }
+            if (e.key === 'F12') {
+                e.preventDefault();
+                return false;
+            }
+            if (e.ctrlKey && e.key === 'u') {
+                e.preventDefault();
+                return false;
+            }
+            if (e.ctrlKey && e.shiftKey && e.key === 'I') {
+                e.preventDefault();
+                return false;
+            }
+            if (e.ctrlKey && e.shiftKey && e.key === 'J') {
+                e.preventDefault();
+                return false;
+            }
+            if (e.ctrlKey && e.shiftKey && e.key === 'C') {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        document.addEventListener('dragstart', function (e) {
+            e.preventDefault();
+            return false;
+        });
+
+        document.onselectstart = function (e) {
+            if (e.target && e.target.id === 'password-input') {
+                return true;
+            }
+            return false;
+        };
+
+        document.onmousedown = function (e) {
+            if (e.target && e.target.id === 'password-input') {
+                return true;
+            }
+            return false;
+        };
+
+        document.addEventListener('copy', function (e) {
+            if (e.target && e.target.id === 'password-input') {
+                return true;
+            }
+            e.preventDefault();
+            return false;
+        });
+
+        document.addEventListener('paste', function (e) {
+            if (e.target && e.target.id === 'password-input') {
+                return true;
+            }
+            e.preventDefault();
+            return false;
+        });
+
+        // הפעלת האפקטים
+        window.addEventListener('load', function() {
+            const passwordInput = document.getElementById('password-input');
+            if (passwordInput) {
+                passwordInput.addEventListener('keypress', function (e) {
+                    if (e.key === 'Enter') {
+                        checkPassword();
+                    }
+                });
+                passwordInput.focus();
+            }
+            
+            addTextSlideEffects();
+            addImageSlideEffects();
+            checkTextScroll();
+            checkImageScroll();
+            scrollToTop();
+        });
+
+        window.addEventListener('scroll', function() {
+            checkTextScroll();
+            checkImageScroll();
+        });
+
+        // מגע ומקלדת
+        let startX = 0;
+        let startY = 0;
+        let endX = 0;
+        let endY = 0;
+
+        document.addEventListener('touchstart', function (e) {
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
+        });
+
+        document.addEventListener('touchend', function (e) {
+            endX = e.changedTouches[0].clientX;
+            endY = e.changedTouches[0].clientY;
+
+            const deltaX = endX - startX;
+            const deltaY = endY - startY;
+
+            if (Math.abs(deltaX) > Math.abs(deltaY) && deltaX > 100) {
+                const currentPage = document.querySelector('.page.active-page').id;
+                if (currentPage !== 'home-page') {
+                    goToHomePage();
+                }
+            }
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'ArrowUp') {
+                const currentPage = document.querySelector('.page.active-page').id;
+                if (currentPage !== 'home-page') {
+                    goToHomePage();
+                    e.preventDefault();
+                }
+            }
+        });
+
+        window.addEventListener('beforeunload', function () {
+            scrollToTop();
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            scrollToTop();
+        });
+
+        document.addEventListener('keyup', function (e) {
+            if (e.key === 'PrintScreen') {
+                navigator.clipboard.writeText('');
+            }
+        });
+    </script>
+
+</body>
+
+</html>
         /* 🎯 אפקטים משופרים - טקסט ותמונות לפי כיוון הכרטיסיה */
         .text-slide-right {
             opacity: 0;
