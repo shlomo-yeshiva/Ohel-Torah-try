@@ -92,22 +92,14 @@
             src: url('EFT_Atara.woff') format('woff');
         }
 
-        /* הגנה מפני העתקה - אבל לא על שדה הסיסמה */
-        *:not(#password-input) {
+        /* הגנה מפני העתקה */
+        * {
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
             -webkit-touch-callout: none;
             -webkit-tap-highlight-color: transparent;
-        }
-
-        /* אפשר בחירה בשדה הסיסמה */
-        #password-input {
-            -webkit-user-select: text !important;
-            -moz-user-select: text !important;
-            -ms-user-select: text !important;
-            user-select: text !important;
         }
 
         /* הגנה על תמונות */
@@ -132,12 +124,21 @@
             margin: 0;
             padding: 0;
             font-family: 'Guttman Mantova', serif;
-            background-color: #6E0000;
             overflow-x: hidden;
             max-width: 100vw;
             box-sizing: border-box;
             touch-action: pan-y;
             scroll-behavior: smooth;
+        }
+
+        /* רקע אדום לכל הדפים חוץ מדף הבית */
+        body:not(.home-active) {
+            background-color: #6E0000;
+        }
+
+        /* רקע קרם רק לדף הבית */
+        body.home-active {
+            background-color: #faf8f5;
         }
 
         .navigation {
@@ -179,7 +180,7 @@
             border: 1.5px solid white;
             color: white;
             padding: 10px 1px;
-            font-size: 35px; /* הקטנה מ-45px */
+            font-size: 35px;
             font-family: 'Guttman Mantova', serif;
             cursor: pointer;
             border-radius: 10px;
@@ -485,13 +486,13 @@
         .hero-section {
             position: relative;
             width: 100vw;
-            height: 123vh;
+            height: 100vh;
             margin: 0;
             margin-top: 20vh;
             padding: 0;
             overflow: hidden;
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: flex-start;
             box-sizing: border-box;
             z-index: 1;
@@ -499,62 +500,288 @@
 
         .hero-image {
             position: absolute;
-            width: 100%;
+            width: 50%;
             height: 100%;
             top: 0;
-            left: 0;
+            right: 0;
             object-fit: cover;
             object-position: center center;
             z-index: 0;
-            animation: zoomInOut 10s cubic-bezier(0.23, 1, 0.32, 1) infinite;
             border: none;
             border-radius: 0;
             box-sizing: border-box;
         }
 
-        @keyframes zoomInOut {
-            0% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.18);
-            }
-
-            100% {
-                transform: scale(1);
-            }
-        }
 
         .hero-title {
             position: absolute;
-            top: 27%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 23vw;
-            font-family: 'EFT_Talpiot', serif;
-            background: linear-gradient(45deg, #FFD700, #FF8C00, #FF6347, #FFD700);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            color: transparent;
-            text-shadow: 0 0 15px rgba(255, 215, 0, 1), 0 0 25px rgba(255, 140, 0, 0.9), 0 0 35px rgba(255, 99, 71, 0.7);
+            top: 50%;
+            left: 5%;
+            transform: translateY(-50%);
+            font-size: 12vw;
+            font-family: 'FrankRuhl', 'Frank Ruhl', serif;
+            color: black;
+            margin: 0;
+            z-index: 2;
+            font-weight: bold;
+            white-space: nowrap;
+            text-align: center;
+            opacity: 0;
+            animation: fadeInBounce 1.5s ease-out 0.5s forwards;
+        }
+
+        .hero-subtitle {
+            position: absolute;
+            top: 35%;
+            left: 5%;
+            transform: translateY(-50%);
+            font-size: 4vw;
+            font-family: 'FrankRuhl', 'Frank Ruhl', serif;
+            color: #666;
             margin: 0;
             z-index: 2;
             font-weight: normal;
             white-space: nowrap;
-            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+            text-align: center;
+            opacity: 0;
+            animation: fadeInBounceFromRight 1.5s ease-out 0.8s forwards;
         }
 
-        .hero-image::after {
+        @keyframes fadeInBounce {
+            0% {
+                opacity: 0;
+                transform: translateY(-50%) translateY(50px) scale(0.8);
+            }
+            50% {
+                opacity: 0.8;
+                transform: translateY(-50%) translateY(-10px) scale(1.05);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(-50%) translateY(0) scale(1);
+            }
+        }
+
+        @keyframes fadeInBounceFromRight {
+            0% {
+                opacity: 0;
+                transform: translateY(-50%) translateX(100px) scale(0.8);
+            }
+            50% {
+                opacity: 0.8;
+                transform: translateY(-50%) translateX(-10px) scale(1.05);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(-50%) translateX(0) scale(1);
+            }
+        }
+
+
+
+        /* הסרת overlay מקורי */
+        .hero-section::after {
+            display: none !important;
+        }
+
+        /* רקע קרם לחצי השמאלי בדף הבית */
+        #home-page .hero-section::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
+            width: 50%;
             height: 100%;
-            background-color: rgba(110, 0, 0, 0.4);
+            background: #faf8f5;
+            z-index: 0;
+        }
+
+
+        /* כרטיסיה ראשית עם סטטיסטיקות - עיצוב קרם רק בדף הבית */
+        .stats-main-card {
+            position: relative;
+            width: 100%;
+            background-color: #faf8f5;
+            margin-top: 30px;
+            padding: 40px 20px 0 20px;
+            border-radius: 80px 80px 0 0;
+            box-shadow: none;
+            backdrop-filter: none;
+            z-index: 10;
+            border: none;
+            display: block;
+            overflow: hidden;
+        }
+
+        /* הסתרת הכרטיסיה כשנמצאים בדפים אחרים */
+        body:not(.home-active) .stats-main-card {
+            display: none;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .stat-card {
+            background-color: #f0e6d2;
+            border-radius: 80px 80px 0 0;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+            border: 3px solid #d4c4a8;
+            min-height: 220px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(50px) scale(0.8);
+        }
+
+        .stat-card.animate {
+            animation: cardBounceIn 0.8s ease-out forwards;
+        }
+
+        .stat-card .stat-number,
+        .stat-card .stat-label {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out;
+        }
+
+        .stat-card.content-animate .stat-number,
+        .stat-card.content-animate .stat-label {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stat-card:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .stat-card:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+
+        .stat-card:nth-child(3) {
+            animation-delay: 1.0s;
+        }
+
+        .stat-card:nth-child(4) {
+            animation-delay: 1.5s;
+        }
+
+        @keyframes cardBounceIn {
+            0% {
+                opacity: 0;
+                transform: translateX(-100px) translateY(50px) scale(0.3);
+            }
+            30% {
+                opacity: 0.7;
+                transform: translateX(10px) translateY(-20px) scale(1.1);
+            }
+            60% {
+                opacity: 0.9;
+                transform: translateX(-5px) translateY(5px) scale(0.95);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0) translateY(0) scale(1);
+            }
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.1) 100%);
             z-index: 1;
+        }
+
+        .stat-card .stat-number,
+        .stat-card .stat-label {
+            position: relative;
+            z-index: 2;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25), 0 8px 20px rgba(0, 0, 0, 0.15);
+            border-color: #c4b59a;
+            background-color: #f5ede0;
+        }
+
+        .stat-number {
+            font-size: 90px;
+            font-weight: 900;
+            color: #2c1810;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            font-family: 'FrankRuhl', 'Frank Ruhl', serif;
+            direction: ltr;
+            text-align: center;
+            letter-spacing: -2px;
+        }
+
+        .stat-label {
+            font-size: 32px;
+            color: #4a3c2a;
+            font-weight: 600;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            line-height: 1.2;
+            font-family: 'FrankRuhl', 'Frank Ruhl', serif;
+            letter-spacing: 0.5px;
+        }
+
+        /* התאמה למובייל */
+        @media (max-width: 768px) {
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+            
+            .stat-card {
+                max-width: 100%;
+                padding: 20px;
+            }
+            
+            .stat-number {
+                font-size: 50px;
+            }
+            
+            .stat-label {
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-container {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .stat-card {
+                padding: 25px;
+            }
+            
+            .stat-number {
+                font-size: 60px;
+            }
+            
+            .stat-label {
+                font-size: 22px;
+            }
         }
 
         .cream-box-2 {
@@ -927,31 +1154,6 @@
 </head>
 
 <body>
-    <!-- מסך הסיסמה -->
-    <div id="password-screen" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-background: rgba(0, 0, 0, 0.5); display: flex;
-justify-content: center; align-items: center; z-index: 10000;">
-        <div style="background: rgba(245, 230, 211, 0.98); padding: 25px; border-radius: 20px;
-border: 17px solid #6E0000; text-align: center; box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6); width: 450px;">
-            <h2
-                style="color: #6E0000; font-size: 76px; margin-bottom: 10px; font-weight: bold; line-height: 0.3; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);">
-                אהל תורה</h2>
-            <p style="color: #2A1A10; font-size: 20px; margin-bottom: 20px;">אתר זה מוגן בסיסמה<br>אנא הזינו את הסיסמה
-                להמשך<br><span
-                    style="color: #A8301F; font-size: 16px; line-height: 1.3; font-weight: 900; display: block; margin-top: 5px;">כל
-                    העתקה, שכפול, הפצה או שימוש בתכנים או בקוד מתוך אתר זה אסורים על פי דין תורה ונחשבים לגזל ממש. שימוש
-                    כזה עלול להיחשב כהשגת גבול וגזל דעת.</span></p>
-            <input type="password" id="password-input" placeholder="סיסמה" style="width: 80%; padding: 15px; font-size: 20px; border: 3px solid #6E0000;
-       border-radius: 10px; text-align: center; margin-bottom: 15px; box-sizing: border-box;">
-            <br>
-            <button onclick="checkPassword()"
-                style="background: #6E0000; color: white; padding: 15px 30px;
-        font-size: 20px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);">
-                כניסה
-            </button>
-            <div id="error-message" style="color: #A8301F; font-size: 16px; margin-top: 8px; font-weight: bold;"></div>
-        </div>
-    </div>
 
     <nav class="navigation">
         <div class="nav-container">
@@ -965,9 +1167,32 @@ border: 17px solid #6E0000; text-align: center; box-shadow: 0 25px 50px rgba(0, 
 
     <div id="home-page" class="page active-page">
         <div class="hero-section">
+            <h2 class="hero-subtitle">ממלכת</h2>
             <h1 class="hero-title" id="mainTitle">אהל תורה</h1>
             <img src="https://i.postimg.cc/4xX4LcNM/optimized-optimized-optimized.png" alt="תמונת רקע"
                 class="hero-image" />
+        </div>
+    </div>
+    
+    <!-- כרטיסיה ראשית עם סטטיסטיקות -->
+    <div class="stats-main-card" id="stats-card">
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-number" id="students-counter">0</div>
+                <div class="stat-label">בחורים בשני הישיבות</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="classes-counter">0</div>
+                <div class="stat-label">חדרי שיעורים</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="years-counter">0</div>
+                <div class="stat-label">שנים הישיבה קיימת</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="branches-counter">0</div>
+                <div class="stat-label">סניפי הישיבה</div>
+            </div>
         </div>
     </div>
 
@@ -990,14 +1215,14 @@ border: 17px solid #6E0000; text-align: center; box-shadow: 0 25px 50px rgba(0, 
 
         <div class="content-box">
             <p class="title">מספרם של בני הישיבה</p>
-            <p style="color: #722F37;">בני הישיבה נמנים על סך 350 בחורים השוקדים על תלמודם בהתמדה נוראה.</p>
+            <p style="color: #722F37;">בני הישיבה נמנים על סך 500 בחורים השוקדים על תלמודם בהתמדה נוראה.</p>
             <p style="color: #722F37;"> רבני הישיבה דואגים למזג את השילוב בין מספרם הרב של בני הישיבה לבין הבנייה האישית
                 וצמיחתו בתורה וביראת שמיים טהורה של כל בחור ובחור בפני עצמו.</p>
             <p style="color: #722F37;"> אשר על כן רבני הישיבה דואגים לחלוקה של השיעורים כדלהלן:</p>
-            <p style="color: #722F37;">שיעור א' - 109 בחורים</p>
-            <p style="color: #722F37;">שיעור ב' - 96 בחורים</p>
-            <p style="color: #722F37;">שיעור ג' - 91 בחורים</p>
-            <p style="color: #722F37;">קיבוץ - 68 בחורים</p>
+            <p style="color: #722F37;">שיעור א' - 202 בחורים</p>
+            <p style="color: #722F37;">שיעור ב' - 74 בחורים</p>
+            <p style="color: #722F37;">שיעור ג' - 76 בחורים</p>
+            <p style="color: #722F37;">קיבוץ - 75 בחורים</p>
             <p style="color: #722F37;">מכיון שרבני הישיבה דואגים שכל בחור יקבל יחס אישי על אף המספר הרב של בני השיעור.
             </p>
             <p style="color: #722F37;">לפיכך השיעורים שיש בתוכם מספר רב של לומדים מחולקים לשני מגידי שיעורים שונים.</p>
@@ -1397,6 +1622,9 @@ border: 17px solid #6E0000; text-align: center; box-shadow: 0 25px 50px rgba(0, 
                 btn.classList.remove('active');
             });
 
+            // הסרת קלאס home-active מה-body
+            document.body.classList.remove('home-active');
+
             // הצגת הדף הנבחר
             const targetPage = document.getElementById(pageId + '-page');
             if (targetPage) {
@@ -1431,6 +1659,9 @@ border: 17px solid #6E0000; text-align: center; box-shadow: 0 25px 50px rgba(0, 
 
             document.getElementById('home-page').classList.add('active-page');
             document.querySelector('.nav-btn').classList.add('active');
+            
+            // הוספת קלאס ל-body כדי שהכרטיסיה תהיה נראית
+            document.body.classList.add('home-active');
 
             // איפוס הריבועים
             document.querySelectorAll('.riboim-wrapper div').forEach(div => {
@@ -1439,6 +1670,10 @@ border: 17px solid #6E0000; text-align: center; box-shadow: 0 25px 50px rgba(0, 
 
             scrollToTop();
             refreshEffectsOnPageChange();
+            
+            // איפוס המונה כדי שהאנימציה תתחיל מחדש
+            countersStarted = false;
+            setTimeout(checkStatsCardVisibility, 500);
         }
 
         function scrollToTop() {
@@ -1457,18 +1692,6 @@ border: 17px solid #6E0000; text-align: center; box-shadow: 0 25px 50px rgba(0, 
             window.location.href = `mailto:s0534142893@gmail.com?subject=${encodedSubject}&body=${encodedBody}`;
         }
 
-        function checkPassword() {
-            const password = document.getElementById('password-input').value;
-            const correctPassword = '207075896';
-            
-            if (password === correctPassword) {
-                document.getElementById('password-screen').style.display = 'none';
-                document.getElementById('error-message').textContent = '';
-            } else {
-                document.getElementById('error-message').textContent = 'סיסמה שגויה! נסו שוב';
-                document.getElementById('password-input').value = '';
-            }
-        }
 
         // הגנות אבטחה
         document.addEventListener('contextmenu', function (e) {
@@ -1517,57 +1740,153 @@ border: 17px solid #6E0000; text-align: center; box-shadow: 0 25px 50px rgba(0, 
         });
 
         document.onselectstart = function (e) {
-            if (e.target && e.target.id === 'password-input') {
-                return true;
-            }
             return false;
         };
 
         document.onmousedown = function (e) {
-            if (e.target && e.target.id === 'password-input') {
-                return true;
-            }
             return false;
         };
 
         document.addEventListener('copy', function (e) {
-            if (e.target && e.target.id === 'password-input') {
-                return true;
-            }
             e.preventDefault();
             return false;
         });
 
         document.addEventListener('paste', function (e) {
-            if (e.target && e.target.id === 'password-input') {
-                return true;
-            }
             e.preventDefault();
             return false;
         });
 
+        // אפקט המספרים הרצים משופר
+        function animateCounter(element, target, duration) {
+            let start = 0;
+            const startTime = performance.now();
+            
+            function updateCounter(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                // Easing function - easeOutQuart
+                const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+                const current = Math.floor(start + (target - start) * easeOutQuart);
+                
+                element.textContent = current;
+                
+                if (progress < 1) {
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    element.textContent = target;
+                }
+            }
+            
+            requestAnimationFrame(updateCounter);
+        }
+
+        let countersStarted = false;
+
+        function startCounters() {
+            if (countersStarted) return;
+            countersStarted = true;
+
+            // אנימציה של מספר הבחורים - 4 שניות
+            const studentsElement = document.getElementById('students-counter');
+            if (studentsElement) {
+                studentsElement.textContent = '0';
+                animateCounter(studentsElement, 600, 4000);
+            }
+
+            // אנימציה של מספר חדרי השיעורים - 1 שנייה
+            const classesElement = document.getElementById('classes-counter');
+            if (classesElement) {
+                classesElement.textContent = '0';
+                animateCounter(classesElement, 17, 1000);
+            }
+
+            // אנימציה של שנות הפעילות - 1 שנייה
+            const yearsElement = document.getElementById('years-counter');
+            if (yearsElement) {
+                yearsElement.textContent = '0';
+                animateCounter(yearsElement, 6, 1000);
+            }
+
+            // אנימציה של מספר הסניפים - 2 שניות
+            const branchesElement = document.getElementById('branches-counter');
+            if (branchesElement) {
+                branchesElement.textContent = '0';
+                animateCounter(branchesElement, 2, 2000);
+            }
+        }
+
+        function checkStatsCardVisibility() {
+            const statsCard = document.getElementById('stats-card');
+            if (statsCard && statsCard.offsetParent !== null) {
+                const rect = statsCard.getBoundingClientRect();
+                const windowHeight = window.innerHeight;
+                
+                // בדיקה אם הכרטיסיה נראית על המסך
+                if (rect.top < windowHeight - 100 && rect.bottom > 100) {
+                    startCardAnimations();
+                }
+            }
+        }
+
+        function startCardAnimations() {
+            const cards = document.querySelectorAll('.stat-card');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    // קודם מעלה את הכרטיסיה
+                    card.classList.add('animate');
+                    
+                    // אחרי שהכרטיסיה עלתה, מעלה את התוכן
+                    setTimeout(() => {
+                        card.classList.add('content-animate');
+                        
+                        // אחרי שהתוכן עלה, מתחיל את הספירה
+                        setTimeout(() => {
+                            startCounterForCard(card, index);
+                        }, 300); // 0.3 שניות אחרי שהתוכן עולה
+                    }, 600); // 0.6 שניות אחרי שהכרטיסיה מתחילה לעלות
+                }, index * 500); // 0.5 שניות בין כל כרטיסיה
+            });
+        }
+
+        function startCounterForCard(card, index) {
+            const counterElement = card.querySelector('.stat-number');
+            if (!counterElement) return;
+
+            const counters = [
+                { target: 600, duration: 4000 }, // בחורים בשני הישיבות
+                { target: 17, duration: 1000 },  // חדרי שיעורים
+                { target: 6, duration: 1000 },   // שנות פעילות
+                { target: 2, duration: 2000 }    // סניפים
+            ];
+
+            const counter = counters[index];
+            if (counter) {
+                counterElement.textContent = '0';
+                animateCounter(counterElement, counter.target, counter.duration);
+            }
+        }
+
         // הפעלת האפקטים
         window.addEventListener('load', function() {
-            const passwordInput = document.getElementById('password-input');
-            if (passwordInput) {
-                passwordInput.addEventListener('keypress', function (e) {
-                    if (e.key === 'Enter') {
-                        checkPassword();
-                    }
-                });
-                passwordInput.focus();
-            }
+            // הוספת קלאס home-active ל-body כדי שהכרטיסיה תהיה נראית
+            document.body.classList.add('home-active');
             
             addTextSlideEffects();
             addImageSlideEffects();
             checkTextScroll();
             checkImageScroll();
             scrollToTop();
+            
+            // בדיקה ראשונית של הכרטיסיה
+            checkStatsCardVisibility();
         });
 
         window.addEventListener('scroll', function() {
             checkTextScroll();
             checkImageScroll();
+            checkStatsCardVisibility();
         });
 
         // מגע ומקלדת
